@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class MainFrame extends JFrame {
     final private Font mainFont = new Font("Segoe print", Font.BOLD, 18);
@@ -32,10 +33,17 @@ public class MainFrame extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                int passwordLength = Integer.parseInt(tfPasswordLength.getText());
-
-                PasswordGenerator passwordGenerator = (new PasswordGenerator());
-                lbOutput.setText("Your secure password is " + passwordGenerator.generate(passwordLength));
+                // int passwordLength = Integer.parseInt(tfPasswordLength.getText());
+                PassStrengthChecker strengthChecker = new PassStrengthChecker();
+                ArrayList<String> PasswordWeaknesses = strengthChecker.CheckStrength((tfPasswordLength.getText()));
+                String outputString = "";
+                for (String weakness : PasswordWeaknesses) {
+                    outputString += weakness;
+                }
+                lbOutput.setText(outputString);
+                // PasswordGenerator passwordGenerator = (new PasswordGenerator());
+                // lbOutput.setText("Your secure password is " +
+                // passwordGenerator.generate(passwordLength));
             }
 
         });
