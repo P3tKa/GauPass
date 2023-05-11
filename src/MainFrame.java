@@ -26,13 +26,20 @@ public class MainFrame extends JFrame {
 
     private JPanel createContentPane() {
         JPanel contentPane = new JPanel(new BorderLayout());
-        JPanel titleBar = new TitleBar().createTitleBar(this);
-
         contentPane.setBorder(BorderFactory.createLineBorder(UI_color.BLACK, UI_size.APP_BORDER_THICKNESS));
-        contentPane.add(titleBar, BorderLayout.NORTH);
-        contentPane.setBackground(UI_color.FOG);
+
+        fillContentPane(contentPane);
 
         return contentPane;
+    }
+
+    private void fillContentPane(JPanel contentPane) {
+        JPanel titleBar = new TitleBar().createTitleBar(this);
+        contentPane.add(titleBar, BorderLayout.NORTH);
+
+        JPanel contentGrid = new ContentGrid().createContentGrid();
+        contentPane.add(contentGrid);
+
     }
 
 }
