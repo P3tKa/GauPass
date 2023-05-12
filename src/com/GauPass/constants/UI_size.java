@@ -4,7 +4,7 @@ public class UI_size {
     public static final double APP_HEIGHT_PERCENTAGE = 0.4;
     public static final double APP_WIDTH_PERCENTAGE = 0.6;
     public static final int APP_BORDER_THICKNESS = 3;
-    
+
     public static final int TITLE_BAR_WIDTH = 75;
 
     public static final int TITLE_BAR_ICON_WIDTH = 30;
@@ -19,5 +19,6 @@ public class UI_size {
     public static final double KEYWORD_FIRST_ROW_SIZE = 0.2;
     public static final double KEYWORD_SECOND_ROW_SIZE = 0.8;
 
+    public static final int GENERATE_BUTTON_LABEL_TEXT_SIZE = 16;
 
 }
