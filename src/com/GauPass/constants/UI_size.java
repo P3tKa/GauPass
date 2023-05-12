@@ -15,4 +15,9 @@ public class UI_size {
     public static final float TITLE_SIZE = 50f;
     public static final int DEFAULT_TITLE_SIZE = 50;
 
+    public static final int KEYWORD_DEFAULT_LABEL_TEXT_SIZE = 12;
+    public static final double KEYWORD_FIRST_ROW_SIZE = 0.2;
+    public static final double KEYWORD_SECOND_ROW_SIZE = 0.8;
+
+
 }

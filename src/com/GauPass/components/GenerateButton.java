@@ -10,7 +10,7 @@ public class GenerateButton {
     
     public JPanel createSubmitButton() {
         JPanel generateButton = new JPanel();
-        generateButton.setBackground(Color.RED);
+        // generateButton.setBackground(Color.RED);
 
 
         return generateButton;
