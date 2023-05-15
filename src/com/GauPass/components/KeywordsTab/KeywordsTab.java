@@ -65,7 +65,7 @@ public class KeywordsTab {
 
         JPanel buttonContainer = new JPanel(new GridBagLayout());
         buttonContainer.setBackground(UI_color.FOG);
-        buttonContainer.setBorder(BorderFactory.createMatteBorder(UI_size.APP_BORDER_THICKNESS, 0, 0, 0, Color.BLACK));
+        buttonContainer.setBorder(BorderFactory.createMatteBorder(UI_size.APP_BORDER_THICKNESS, 0, 0, 0, UI_color.BLACK));
         JButton generateButton = new SubmitButton().createSubmitButton(buttonContainer, inputField);
         buttonContainer.add(generateButton);
 

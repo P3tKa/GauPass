@@ -6,9 +6,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class ChangeForegroundOnPress {
+
+    Color foreground;
     
     public void ChangeForeground(Component c, Color color) {
-        Color foreground = c.getForeground();
+        foreground = c.getForeground();
 
         c.addMouseListener(new MouseAdapter() {
             @Override

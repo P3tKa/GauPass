@@ -2,7 +2,6 @@ package com.GauPass.components.TitleBar;
 
 import javax.swing.*;
 
-import com.GauPass.components.ClipboardButton;
 import com.GauPass.constants.*;
 import com.GauPass.utils.LoadFont;
 
@@ -17,7 +16,7 @@ public class TitleBar {
         JPanel titleBar = new JPanel();
         titleBar.setPreferredSize(new Dimension(frame.getWidth(), UI_size.TITLE_BAR_WIDTH));
         titleBar.setBackground(UI_color.DEEP_LILAC);
-        titleBar.setBorder(BorderFactory.createMatteBorder(0, 0, UI_size.APP_BORDER_THICKNESS, 0, Color.BLACK));
+        titleBar.setBorder(BorderFactory.createMatteBorder(0, 0, UI_size.APP_BORDER_THICKNESS, 0, UI_color.BLACK));
 
         addTitleBarDrag(frame, titleBar);
         addApplicationButtons(frame, titleBar);

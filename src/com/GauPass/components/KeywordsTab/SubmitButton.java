@@ -14,6 +14,7 @@ import com.GauPass.constants.UI_color;
 import com.GauPass.constants.UI_font_path;
 import com.GauPass.constants.UI_locale;
 import com.GauPass.constants.UI_size;
+import com.GauPass.utils.ChangeBackgroundOnHover;
 import com.GauPass.utils.ChangeCursorOnHover;
 import com.GauPass.utils.ChangeForegroundOnPress;
 import com.GauPass.utils.LoadFont;
@@ -26,8 +27,9 @@ public class SubmitButton {
         JButton button = new RoundedButton(UI_locale.SUBMIT_BUTTON_TEXT, UI_size.SUBMIT_BUTTON_ARC_WIDTH, UI_size.SUBMIT_BUTTON_ARC_HEIGHT, UI_color.VENETIAN_RED);
         button.setBackground(UI_color.AMARANTH);
         new LoadFont(button, UI_font_path.RUSSOONE_REGULAR, UI_size.SUBMIT_BUTTON_FONT_SIZE);
-        new ChangeForegroundOnPress().ChangeForeground(button, Color.WHITE);
+        new ChangeForegroundOnPress().ChangeForeground(button, UI_color.WHITE);
         new ChangeCursorOnHover(button);
+        new ChangeBackgroundOnHover(button, UI_color.RED);
 
         button.addActionListener(new ActionListener() {
             @Override
@@ -35,18 +37,6 @@ public class SubmitButton {
                 System.out.println(keywordField.getText());
                 keywordField.setText("");
 
-            }
-        });
-
-        button.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                button.setBackground(Color.RED);
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                button.setBackground(UI_color.AMARANTH);
             }
         });
 
