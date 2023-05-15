@@ -1,4 +1,4 @@
-package com.GauPass.components;
+package com.GauPass.components.TitleBar;
 
 import javax.swing.*;
 

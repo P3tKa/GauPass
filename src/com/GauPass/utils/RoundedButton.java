@@ -1,4 +1,4 @@
-package com.GauPass.components;
+package com.GauPass.utils;
 
 import java.awt.*;
 import javax.swing.*;

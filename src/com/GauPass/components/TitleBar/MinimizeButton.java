@@ -1,4 +1,4 @@
-package com.GauPass.components;
+package com.GauPass.components.TitleBar;
 
 import com.GauPass.constants.UI_icon_path;
 import com.GauPass.constants.UI_size;

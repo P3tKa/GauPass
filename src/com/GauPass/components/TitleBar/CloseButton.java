@@ -1,4 +1,4 @@
-package com.GauPass.components;
+package com.GauPass.components.TitleBar;
 
 import com.GauPass.constants.*;
 import com.GauPass.utils.HoverButtonIcon;
