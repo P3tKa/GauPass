@@ -1,6 +1,5 @@
 package com.GauPass.components.KeywordsTab;
 
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.FocusAdapter;
@@ -44,7 +43,7 @@ public class KeywordsTab {
     private JTextArea createInputField() {
 
         JTextArea inputField = new JTextArea(UI_locale.KEYWORDS_DEFAULT_TEXT);
-        inputField.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 0));
+        inputField.setBorder(BorderFactory.createEmptyBorder(5, 5, -100, 0));
         inputField.setBackground(UI_color.FOG);
         new LoadFont(inputField, UI_font_path.RUSSOONE_REGULAR, UI_size.KEYWORD_DEFAULT_LABEL_TEXT_SIZE);
 
