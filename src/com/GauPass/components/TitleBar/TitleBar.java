@@ -2,6 +2,7 @@ package com.GauPass.components.TitleBar;
 
 import javax.swing.*;
 
+import com.GauPass.components.ClipboardButton;
 import com.GauPass.constants.*;
 import com.GauPass.utils.LoadFont;
 

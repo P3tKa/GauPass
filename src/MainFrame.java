@@ -50,7 +50,7 @@ public class MainFrame extends JFrame {
         JPanel leftPanel = new JPanel(new BorderLayout());
 
         JPanel keywordsTab = new KeywordsTab().createKeywordsTab();
-        keywordsTab.setBorder(BorderFactory.createMatteBorder(0, 3, 0, 3, Color.BLACK));
+        keywordsTab.setBorder(BorderFactory.createMatteBorder(0, UI_size.APP_BORDER_THICKNESS, 0, 3, Color.BLACK));
 
         JPanel rightPanel = new JPanel(new BorderLayout());
 

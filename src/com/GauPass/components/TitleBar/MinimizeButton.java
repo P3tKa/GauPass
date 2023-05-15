@@ -2,7 +2,8 @@ package com.GauPass.components.TitleBar;
 
 import com.GauPass.constants.UI_icon_path;
 import com.GauPass.constants.UI_size;
-import com.GauPass.utils.HoverButtonIcon;
+import com.GauPass.utils.ChangeCursorOnHover;
+import com.GauPass.utils.ChangeIconOnHover;
 import com.GauPass.utils.IconSizeChanger;
 
 import java.awt.event.ActionEvent;
@@ -16,13 +17,15 @@ import javax.swing.JFrame;
 public class MinimizeButton {
 
     public JButton createMinimizeButton(JFrame frame) {
-        ImageIcon defaultIcon = new ImageIcon(UI_icon_path.MINIMIZE_ICON);
-        ImageIcon hoverIcon = new ImageIcon(UI_icon_path.MINIMIZE_HOVER_ICON);
+        JButton minimizeButton = new JButton();
         
-        ImageIcon mainIcon = new IconSizeChanger().ChangeIconSize(defaultIcon, UI_size.TITLE_BAR_ICON_WIDTH, UI_size.TITLE_BAR_ICON_HEIGHT);
-        ImageIcon onHoverIcon = new IconSizeChanger().ChangeIconSize(hoverIcon, UI_size.TITLE_BAR_ICON_WIDTH, UI_size.TITLE_BAR_ICON_HEIGHT);
+        ImageIcon mainIcon = new IconSizeChanger().ChangeIconSize(new ImageIcon(UI_icon_path.MINIMIZE_ICON), UI_size.TITLE_BAR_ICON_WIDTH, UI_size.TITLE_BAR_ICON_HEIGHT);
+        ImageIcon onHoverIcon = new IconSizeChanger().ChangeIconSize(new ImageIcon(UI_icon_path.MINIMIZE_HOVER_ICON), UI_size.TITLE_BAR_ICON_WIDTH, UI_size.TITLE_BAR_ICON_HEIGHT);
 
-        HoverButtonIcon minimizeButton = new HoverButtonIcon(mainIcon, onHoverIcon);
+        minimizeButton.setIcon(mainIcon);
+
+        new ChangeIconOnHover(minimizeButton, mainIcon, onHoverIcon);
+        new ChangeCursorOnHover(minimizeButton);
 
         minimizeButton.setBorder(BorderFactory.createEmptyBorder());
 

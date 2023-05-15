@@ -9,24 +9,20 @@ import javax.swing.JButton;
 
 import com.GauPass.constants.UI_icon_path;
 import com.GauPass.constants.UI_size;
-import com.GauPass.utils.ChangeClickedIcon;
+import com.GauPass.utils.ChangeCursorOnHover;
+import com.GauPass.utils.ChangeIconOnClick;
 import com.GauPass.utils.IconSizeChanger;
 
 public class ClipboardButton {
     public JButton createClipboardButton() {
-        ImageIcon defaultIcon = new ImageIcon(UI_icon_path.CLOSE_ICON);
-        ImageIcon onHoverIcon = new ImageIcon(UI_icon_path.CLOSE_HOVER_ICON);
-        ImageIcon onClickIcon = new ImageIcon(UI_icon_path.MINIMIZE_ICON);
+        JButton clipboardButton = new JButton();
 
-        ImageIcon defaultIconFixedSize = new IconSizeChanger().ChangeIconSize(defaultIcon, UI_size.TITLE_BAR_ICON_WIDTH,
-                UI_size.TITLE_BAR_ICON_HEIGHT);
-        ImageIcon onHoverIconFixedSize = new IconSizeChanger().ChangeIconSize(onHoverIcon, UI_size.TITLE_BAR_ICON_WIDTH,
-                UI_size.TITLE_BAR_ICON_HEIGHT);
-        ImageIcon onClickIconFixedSize = new IconSizeChanger().ChangeIconSize(onClickIcon, UI_size.TITLE_BAR_ICON_WIDTH,
-                UI_size.TITLE_BAR_ICON_HEIGHT);
+        ImageIcon mainIcon = new IconSizeChanger().ChangeIconSize(new ImageIcon(UI_icon_path.CLOSE_ICON), UI_size.TITLE_BAR_ICON_WIDTH, UI_size.TITLE_BAR_ICON_HEIGHT);
+        ImageIcon onClickIcon = new IconSizeChanger().ChangeIconSize(new ImageIcon(UI_icon_path.MINIMIZE_ICON), UI_size.TITLE_BAR_ICON_WIDTH, UI_size.TITLE_BAR_ICON_HEIGHT);
 
-        ChangeClickedIcon clipboardButton = new ChangeClickedIcon(defaultIconFixedSize,
-                onHoverIconFixedSize, onClickIconFixedSize);
+        clipboardButton.setIcon(mainIcon);
+        new ChangeIconOnClick(clipboardButton, mainIcon, onClickIcon);
+        new ChangeCursorOnHover(clipboardButton);
 
         clipboardButton.setBorder(BorderFactory.createEmptyBorder());
 

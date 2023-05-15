@@ -1,7 +1,8 @@
 package com.GauPass.components.TitleBar;
 
 import com.GauPass.constants.*;
-import com.GauPass.utils.HoverButtonIcon;
+import com.GauPass.utils.ChangeCursorOnHover;
+import com.GauPass.utils.ChangeIconOnHover;
 import com.GauPass.utils.IconSizeChanger;
 
 import java.awt.event.ActionEvent;
@@ -14,13 +15,15 @@ import javax.swing.JFrame;
 
 public class CloseButton {
     public JButton createCloseButton(JFrame frame) {
-        ImageIcon defaultIcon = new ImageIcon(UI_icon_path.CLOSE_ICON);
-        ImageIcon hoverIcon = new ImageIcon(UI_icon_path.CLOSE_HOVER_ICON);
+        JButton closeButton = new JButton();
         
-        ImageIcon mainIcon = new IconSizeChanger().ChangeIconSize(defaultIcon, UI_size.TITLE_BAR_ICON_WIDTH, UI_size.TITLE_BAR_ICON_HEIGHT);
-        ImageIcon onHoverIcon = new IconSizeChanger().ChangeIconSize(hoverIcon, UI_size.TITLE_BAR_ICON_WIDTH, UI_size.TITLE_BAR_ICON_HEIGHT);
+        ImageIcon mainIcon = new IconSizeChanger().ChangeIconSize(new ImageIcon(UI_icon_path.CLOSE_ICON), UI_size.TITLE_BAR_ICON_WIDTH, UI_size.TITLE_BAR_ICON_HEIGHT);
+        ImageIcon onHoverIcon = new IconSizeChanger().ChangeIconSize(new ImageIcon(UI_icon_path.CLOSE_HOVER_ICON), UI_size.TITLE_BAR_ICON_WIDTH, UI_size.TITLE_BAR_ICON_HEIGHT);
 
-        HoverButtonIcon closeButton = new HoverButtonIcon(mainIcon, onHoverIcon);
+        closeButton.setIcon(mainIcon);
+
+        new ChangeIconOnHover(closeButton, mainIcon, onHoverIcon);
+        new ChangeCursorOnHover(closeButton);
 
         closeButton.setBorder(BorderFactory.createEmptyBorder());
 
