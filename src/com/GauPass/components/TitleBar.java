@@ -3,12 +3,11 @@ package com.GauPass.components;
 import javax.swing.*;
 
 import com.GauPass.constants.*;
+import com.GauPass.utils.LoadFont;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
 
 public class TitleBar {
     private Point mouseDownCompCoords = null;
@@ -60,27 +59,10 @@ public class TitleBar {
     }
 
     private void addTitleLabel(JPanel titleBar) {
-        JLabel titleLabel = new JLabel("GauPass");
-        loadTitleFont(titleLabel);
-        
+        JLabel titleLabel = new JLabel(UI_locale.TITLE_BAR_HEADER);
+        new LoadFont(titleLabel, UI_font_path.RUSSOONE_REGULAR, UI_size.TITLE_SIZE);
         titleLabel.setBorder(BorderFactory.createEmptyBorder(0, UI_size.TITLE_PADDING_PX, 0, 0));
 
         titleBar.add(titleLabel);
-    }
-
-    private void loadTitleFont(JLabel titleLabel) {
-        Font customFont = null;
-
-        try {
-            customFont = Font.createFont(Font.TRUETYPE_FONT, new File(UI_font_path.RUSSOONE_REGULAR)).deriveFont(UI_size.TITLE_SIZE);
-        } catch (IOException | FontFormatException e) {
-            e.printStackTrace();
-        }
-
-        if (customFont != null) {
-            titleLabel.setFont(customFont);
-        } else {
-            titleLabel.setFont(new Font("SansSerif", Font.BOLD, UI_size.DEFAULT_TITLE_SIZE));
-        }
     }
 }

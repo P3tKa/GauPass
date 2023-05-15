@@ -13,11 +13,12 @@ public class UI_size {
     public static final int TITLE_PADDING_PX = 10;
 
     public static final float TITLE_SIZE = 50f;
-    public static final int DEFAULT_TITLE_SIZE = 50;
 
-    public static final int KEYWORD_DEFAULT_LABEL_TEXT_SIZE = 12;
+    public static final float KEYWORD_DEFAULT_LABEL_TEXT_SIZE = 12f;
     public static final double KEYWORD_FIRST_ROW_SIZE = 0.2;
     public static final double KEYWORD_SECOND_ROW_SIZE = 0.8;
 
-
+    public static final int SUBMIT_BUTTON_ARC_WIDTH = 10;
+    public static final int SUBMIT_BUTTON_ARC_HEIGHT = 10;
+    public static final float SUBMIT_BUTTON_FONT_SIZE = 30f;
 }
