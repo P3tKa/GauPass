@@ -10,6 +10,8 @@ public class UI_color {
     public static final Color RED = new Color(255, 0, 0);
     public static final Color AMARANTH = new Color(241, 72, 82);
     public static final Color VENETIAN_RED = new Color(188, 14, 22);
+    public static final Color PALATINATE_PURPLE = new Color(112, 41, 99);
+    public static final Color ELECTRIC_BLUE = new Color(125, 249, 255);
 
 }
 
