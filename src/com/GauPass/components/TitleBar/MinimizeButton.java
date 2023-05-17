@@ -14,27 +14,27 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 
-public class MinimizeButton {
+public class MinimizeButton extends JButton {
+    private static final String DEFAULT_ICON_PATH = UI_icon_path.MINIMIZE_ICON;
+    private static final String HOVER_ICON_PATH = UI_icon_path.MINIMIZE_HOVER_ICON;
 
-    public JButton createMinimizeButton(JFrame frame) {
-        JButton minimizeButton = new JButton();
+    public  MinimizeButton(JFrame frame) {
         
-        ImageIcon mainIcon = new IconSizeChanger().ChangeIconSize(new ImageIcon(UI_icon_path.MINIMIZE_ICON), UI_size.TITLE_BAR_ICON_WIDTH, UI_size.TITLE_BAR_ICON_HEIGHT);
-        ImageIcon onHoverIcon = new IconSizeChanger().ChangeIconSize(new ImageIcon(UI_icon_path.MINIMIZE_HOVER_ICON), UI_size.TITLE_BAR_ICON_WIDTH, UI_size.TITLE_BAR_ICON_HEIGHT);
+        ImageIcon mainIcon = new IconSizeChanger().ChangeIconSize(new ImageIcon(DEFAULT_ICON_PATH), UI_size.TITLE_BAR_ICON_WIDTH, UI_size.TITLE_BAR_ICON_HEIGHT);
+        ImageIcon onHoverIcon = new IconSizeChanger().ChangeIconSize(new ImageIcon(HOVER_ICON_PATH), UI_size.TITLE_BAR_ICON_WIDTH, UI_size.TITLE_BAR_ICON_HEIGHT);
 
-        minimizeButton.setIcon(mainIcon);
+        setIcon(mainIcon);
 
-        new ChangeIconOnHover(minimizeButton, mainIcon, onHoverIcon);
-        new ChangeCursorOnHover(minimizeButton);
+        new ChangeIconOnHover(this, mainIcon, onHoverIcon);
+        new ChangeCursorOnHover(this);
 
-        minimizeButton.setBorder(BorderFactory.createEmptyBorder());
+        setBorder(BorderFactory.createEmptyBorder());
 
-        minimizeButton.addActionListener(new ActionListener() {
+        addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 frame.setState(JFrame.ICONIFIED);
             }
         });
-        return minimizeButton;
     }
 
 }

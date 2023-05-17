@@ -31,12 +31,8 @@ public class TitleBar {
         buttonPanel.setOpaque(false);
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
-
-        JButton closeButton = new CloseButton().createCloseButton(frame);
-        JButton minimizeButton = new MinimizeButton().createMinimizeButton(frame);
-
-        buttonPanel.add(minimizeButton);
-        buttonPanel.add(closeButton);
+        buttonPanel.add(new CloseButton(frame));
+        buttonPanel.add(new MinimizeButton(frame));
 
 
         titleBar.setLayout(new BorderLayout());

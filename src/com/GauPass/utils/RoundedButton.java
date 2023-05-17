@@ -20,6 +20,7 @@ public class RoundedButton extends JButton {
         setFocusable(false);
     }
 
+    @Override
     protected void paintComponent(Graphics g) {
         if (getModel().isArmed()) {
             g.setColor(onClickColor);
@@ -29,7 +30,7 @@ public class RoundedButton extends JButton {
         g.fillRoundRect(0, 0, getSize().width-1, getSize().height-1, arcWidht, archHeight);
         super.paintComponent(g);
     }
-
+    @Override
     protected void paintBorder(Graphics g) {
         g.setColor(getForeground());
         g.drawRoundRect(0, 0, getSize().width-1, getSize().height-1, arcWidht, archHeight);

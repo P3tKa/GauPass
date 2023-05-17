@@ -13,6 +13,7 @@ import com.GauPass.utils.ChangeCursorOnHover;
 import com.GauPass.utils.ChangeIconOnClick;
 import com.GauPass.utils.IconSizeChanger;
 
+// change this button to be like close/min
 public class ClipboardButton {
     public JButton createClipboardButton() {
         JButton clipboardButton = new JButton();

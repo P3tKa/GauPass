@@ -3,12 +3,12 @@ package com.GauPass.utils;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 
 public class ChangeIconOnClick {
 
-    public ChangeIconOnClick(JButton c, ImageIcon defaultIcon, ImageIcon onClickIcon) {
+    public ChangeIconOnClick(AbstractButton c, ImageIcon defaultIcon, ImageIcon onClickIcon) {
 
         c.addMouseListener(new MouseAdapter() {
             @Override

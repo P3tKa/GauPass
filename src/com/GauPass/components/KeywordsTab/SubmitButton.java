@@ -1,10 +1,7 @@
 package com.GauPass.components.KeywordsTab;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -27,7 +24,7 @@ public class SubmitButton {
         JButton button = new RoundedButton(UI_locale.SUBMIT_BUTTON_TEXT, UI_size.SUBMIT_BUTTON_ARC_WIDTH, UI_size.SUBMIT_BUTTON_ARC_HEIGHT, UI_color.VENETIAN_RED);
         button.setBackground(UI_color.AMARANTH);
         new LoadFont(button, UI_font_path.RUSSOONE_REGULAR, UI_size.SUBMIT_BUTTON_FONT_SIZE);
-        new ChangeForegroundOnPress().ChangeForeground(button, UI_color.WHITE);
+        new ChangeForegroundOnPress(button, UI_color.WHITE);
         new ChangeCursorOnHover(button);
         new ChangeBackgroundOnHover(button, UI_color.RED);
 
