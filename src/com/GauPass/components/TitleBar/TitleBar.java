@@ -11,10 +11,14 @@ import java.awt.event.MouseEvent;
 
 public class TitleBar {
     private Point mouseDownCompCoords = null;
+    private final int TITLE_BAR_WIDTH = 75;
+    private final int TITLE_PADDING = 10;
+    private final float TITLE_SIZE = 50f;
+
 
     public JPanel createTitleBar(JFrame frame) {
         JPanel titleBar = new JPanel();
-        titleBar.setPreferredSize(new Dimension(frame.getWidth(), UI_size.TITLE_BAR_WIDTH));
+        titleBar.setPreferredSize(new Dimension(frame.getWidth(), TITLE_BAR_WIDTH));
         titleBar.setBackground(UI_color.DEEP_LILAC);
         titleBar.setBorder(BorderFactory.createMatteBorder(0, 0, UI_size.APP_BORDER_THICKNESS, 0, UI_color.BLACK));
 
@@ -56,8 +60,8 @@ public class TitleBar {
 
     private void addTitleLabel(JPanel titleBar) {
         JLabel titleLabel = new JLabel(UI_locale.TITLE_BAR_HEADER);
-        new LoadFont(titleLabel, UI_font_path.RUSSOONE_REGULAR, UI_size.TITLE_SIZE);
-        titleLabel.setBorder(BorderFactory.createEmptyBorder(0, UI_size.TITLE_PADDING_PX, 0, 0));
+        new LoadFont(titleLabel, UI_font_path.RUSSOONE_REGULAR, TITLE_SIZE);
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(0, TITLE_PADDING, 0, 0));
 
         titleBar.add(titleLabel);
     }

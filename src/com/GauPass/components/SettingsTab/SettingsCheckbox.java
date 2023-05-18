@@ -20,7 +20,9 @@ public class SettingsCheckbox extends JPanel {
     private static final String SELECTED_DEFAULT = UI_icon_path.CHECKBOX_SELECTED_DEFAULT;
     private static final String SELECTED_HOVER = UI_icon_path.CHECKBOX_SELECTED_HOVER;
 
-    private Color textColor = UI_color.BLACK;
+    private final Color textColor = UI_color.BLACK;
+    private final float FONT_SIZE = 15f;
+    private final int HEIGHT = 30;
 
     private BufferedImage defaultImage;
     private BufferedImage hoverImage;
@@ -35,22 +37,20 @@ public class SettingsCheckbox extends JPanel {
     private JLabel label;
     private String text;
     private String fontPath;
-    private float fontSize;
 
     private int id;
 
-    public SettingsCheckbox(String text, String fontPath, Float fontSize, int height, int id) {
+    public SettingsCheckbox(String text, String fontPath, int id) {
         this.id = id;
         this.text = text;
         this.fontPath = fontPath;
-        this.fontSize = fontSize;
         this.isHovered = false;
         this.mousePressed = false;
         this.isChecked = false;
 
         setLayout(new GridBagLayout());
         setBorder(BorderFactory.createLineBorder(UI_color.PALATINATE_PURPLE, UI_size.APP_BORDER_THICKNESS));
-        setPreferredSize(new Dimension(getPreferredSize().width, height));
+        setPreferredSize(new Dimension(getPreferredSize().width, HEIGHT));
 
         loadImages();
         addTextLabel();
@@ -133,7 +133,7 @@ public class SettingsCheckbox extends JPanel {
 
     private void addTextLabel() {
         label = new JLabel(text);
-        new LoadFont(label, fontPath, fontSize);
+        new LoadFont(label, fontPath, FONT_SIZE);
         label.setForeground(textColor);
         add(label);
 
