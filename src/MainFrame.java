@@ -3,6 +3,7 @@ import java.awt.*;
 
 import com.GauPass.utils.ScreenSizeCalculator;
 import com.GauPass.components.KeywordsTab.KeywordsTab;
+import com.GauPass.components.OutputTab.OutputTab;
 import com.GauPass.components.SettingsTab.SettingsTab;
 import com.GauPass.components.TitleBar.TitleBar;
 import com.GauPass.constants.*;
@@ -53,11 +54,11 @@ public class MainFrame extends JFrame {
         JPanel keywordsTab = new KeywordsTab().createKeywordsTab();
         keywordsTab.setBorder(BorderFactory.createMatteBorder(0, UI_size.APP_BORDER_THICKNESS, 0, UI_size.APP_BORDER_THICKNESS, UI_color.BLACK));
 
-        JPanel rightPanel = new JPanel(new BorderLayout());
+        JPanel outputTab = new OutputTab().createOutputTab();
 
         contentGrid.add(settingsTab);
         contentGrid.add(keywordsTab);
-        contentGrid.add(rightPanel);
+        contentGrid.add(outputTab);
 
         return contentGrid;
     }

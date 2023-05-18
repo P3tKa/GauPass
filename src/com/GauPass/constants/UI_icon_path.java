@@ -11,4 +11,7 @@ public class UI_icon_path {
     public static final String CHECKBOX_ONCLICK = "src/com/GauPass/assets/checkbox_onClick.png";
     public static final String CHECKBOX_SELECTED_DEFAULT = "src/com/GauPass/assets/checkbox_selected_default.png";
     public static final String CHECKBOX_SELECTED_HOVER = "src/com/GauPass/assets/checkbox_selected_hover.png";
+
+    public static final String SLIDER_THUMB_ICON = "src/com/GauPass/assets/checkbox_selected_default.png";
+
 }
