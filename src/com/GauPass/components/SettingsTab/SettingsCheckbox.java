@@ -20,6 +20,8 @@ public class SettingsCheckbox extends JPanel {
     private static final String SELECTED_DEFAULT = UI_icon_path.CHECKBOX_SELECTED_DEFAULT;
     private static final String SELECTED_HOVER = UI_icon_path.CHECKBOX_SELECTED_HOVER;
 
+    private Color textColor = UI_color.BLACK;
+
     private BufferedImage defaultImage;
     private BufferedImage hoverImage;
     private BufferedImage onClickImage;
@@ -31,37 +33,31 @@ public class SettingsCheckbox extends JPanel {
     private boolean isChecked;
 
     private JLabel label;
+    private String text;
+    private String fontPath;
+    private float fontSize;
 
     private int id;
 
     public SettingsCheckbox(String text, String fontPath, Float fontSize, int height, int id) {
-        setLayout(new GridBagLayout());
-        setBorder(BorderFactory.createLineBorder(UI_color.PALATINATE_PURPLE, UI_size.APP_BORDER_THICKNESS));
-        setPreferredSize(new Dimension(getPreferredSize().width, height));
+        this.id = id;
+        this.text = text;
+        this.fontPath = fontPath;
+        this.fontSize = fontSize;
         this.isHovered = false;
         this.mousePressed = false;
         this.isChecked = false;
-        this.id = id;
 
+        setLayout(new GridBagLayout());
+        setBorder(BorderFactory.createLineBorder(UI_color.PALATINATE_PURPLE, UI_size.APP_BORDER_THICKNESS));
+        setPreferredSize(new Dimension(getPreferredSize().width, height));
 
-        defaultImage = new LoadBackgroundImage().loadImage(UNSELECTED_DEFAULT);
-        hoverImage = new LoadBackgroundImage().loadImage(UNSELECTED_HOVER);
-        onClickImage = new LoadBackgroundImage().loadImage(ONCLICK);
+        loadImages();
+        addTextLabel();
+        addMouseEvents();
+    }
 
-        selectedDefaultImage = new LoadBackgroundImage().loadImage(SELECTED_DEFAULT);
-        selectedHoverImage = new LoadBackgroundImage().loadImage(SELECTED_HOVER);
-
-
-        label = new JLabel(text);
-        new LoadFont(label, fontPath, fontSize);
-        label.setForeground(UI_color.BLACK);
-        add(label);
-
-        GridBagConstraints c = new GridBagConstraints();
-        c.anchor = GridBagConstraints.CENTER;
-    
-        add(label, c);
-
+    private void addMouseEvents() {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -91,17 +87,21 @@ public class SettingsCheckbox extends JPanel {
                     label.setForeground(UI_color.BLACK);
                 }
                 isChecked = !isChecked;
+                updateToClicked();
                 
-                ArrayList<CheckboxData> checkboxDataList = CheckboxData.getCheckboxDataList();
-                for (CheckboxData checkboxData : checkboxDataList) {
-                    if (checkboxData.getId() == id) {
-                        checkboxData.setChecked(isChecked);
-                        break;
-                    }
-                }
                 repaint(); 
             }
         });
+    }
+    // bad implementation since every checkbox has to checked for id
+    private void updateToClicked() {
+        ArrayList<CheckboxData> checkboxDataList = CheckboxData.getCheckboxDataList();
+        for (CheckboxData checkboxData : checkboxDataList) {
+            if (checkboxData.getId() == id) {
+                checkboxData.setChecked(isChecked);
+                break;
+            }
+        }
     }
     
     public boolean isChecked() {
@@ -130,4 +130,27 @@ public class SettingsCheckbox extends JPanel {
             g.drawImage(defaultImage, 0, 0, getWidth(), getHeight(), null);
         }
     }
+
+    private void addTextLabel() {
+        label = new JLabel(text);
+        new LoadFont(label, fontPath, fontSize);
+        label.setForeground(textColor);
+        add(label);
+
+        GridBagConstraints c = new GridBagConstraints();
+        c.anchor = GridBagConstraints.CENTER;
+    
+        add(label, c);
+    }
+
+    private void loadImages() {
+        defaultImage = new LoadBackgroundImage().loadImage(UNSELECTED_DEFAULT);
+        hoverImage = new LoadBackgroundImage().loadImage(UNSELECTED_HOVER);
+        onClickImage = new LoadBackgroundImage().loadImage(ONCLICK);
+
+        selectedDefaultImage = new LoadBackgroundImage().loadImage(SELECTED_DEFAULT);
+        selectedHoverImage = new LoadBackgroundImage().loadImage(SELECTED_HOVER);
+    }
+
+
 }
