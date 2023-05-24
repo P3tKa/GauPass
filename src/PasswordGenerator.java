@@ -22,11 +22,8 @@ public class PasswordGenerator {
         this.useSpecialChars = useSpecialChars;
     }
 
-    public String generate(int passwordLength, String word) {
+    public String generate (int passwordLength, String word) {
         SecureRandom random = new SecureRandom();
-        if (word == null) {
-            return "bruh";
-        } else {
             StringBuilder password = new StringBuilder();
             Map<Character, List<Character>> symbolMap = createSymbolMap();
     
@@ -46,7 +43,19 @@ public class PasswordGenerator {
         
             
         }
+    
+    public String generateGen(int passwordLength) { //Generic password generation
+            SecureRandom random = new SecureRandom();
+            String validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?@";
+    
+            for (int i = 0; i < passwordLength; i++) {
+                int randomIndex = random.nextInt(validChars.length());
+                password += validChars.charAt(randomIndex);
+            }
+            return password;
     }
+
+    
     private boolean checkIfValid (String word, String newPass) //Function that will be expanded
     {
         int k = 0;
