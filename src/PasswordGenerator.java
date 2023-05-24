@@ -23,29 +23,49 @@ public class PasswordGenerator {
     }
 
     public String generate(int passwordLength, String word) {
-
         SecureRandom random = new SecureRandom();
-        // StringBuilder passwordBuilder = new StringBuilder();
-        if (word == null){
+        if (word == null) {
             return "bruh";
         } else {
-        StringBuilder password = new StringBuilder();
-        Map<Character, List<Character>> symbolMap = createSymbolMap();
-        
-        for (char c : word.toCharArray()) {
-            char lowerC = Character.toLowerCase(c);
-            List<Character> symbols = symbolMap.get(lowerC);
-            if (symbols != null && symbols.size() > 0) {
-                int index = random.nextInt(symbols.size());
-                password.append(symbols.get(index));
-            } else {
-                password.append(c);
+            StringBuilder password = new StringBuilder();
+            Map<Character, List<Character>> symbolMap = createSymbolMap();
+    
+            for (char c : word.toCharArray()) {
+                char lowerC = Character.toLowerCase(c);
+                List<Character> symbols = symbolMap.get(lowerC);
+                if (symbols != null && symbols.size() > 0) {
+                    int index = random.nextInt(symbols.size());
+                    password.append(symbols.get(index));
+                } else {
+                    password.append(c);
+                }
             }
-        }
+
+            if (checkIfValid(word, password.toString()) == true) return password.toString(); //Validity check
+            else return generate(passwordLength, word);
         
-        return password.toString();
+            
+        }
     }
+    private boolean checkIfValid (String word, String newPass) //Function that will be expanded
+    {
+        int k = 0;
+            for (int i = 0; i < word.length(); ++i) {
+                char c = word.charAt(i);
+                char ch = newPass.charAt(i);
+    
+                if (c == ch) {
+                    k++;
+                }
+            }
+            if ((word.length()>=7) && (k>=word.length()/2) || word == newPass) { //
+                return false; 
+            }
+            else return true;
+           
     }
+
+    
     private static Map<Character, List<Character>> createSymbolMap() {
         
         Map<Character, List<Character>> symbolMap = new HashMap<>();
@@ -77,7 +97,7 @@ public class PasswordGenerator {
         symbolMap.put('y', List.of('y', 'Y'));
         symbolMap.put('z', List.of('2', '5', 'z', 'Z'));
         
-        
+
 
         return symbolMap;
     }
