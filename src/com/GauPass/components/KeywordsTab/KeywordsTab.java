@@ -16,6 +16,7 @@ import com.GauPass.constants.UI_color;
 import com.GauPass.constants.UI_font_path;
 import com.GauPass.constants.UI_locale;
 import com.GauPass.constants.UI_size;
+import com.GauPass.utils.LineFilter;
 import com.GauPass.utils.LoadFont;
 
 public class KeywordsTab {
@@ -50,7 +51,7 @@ public class KeywordsTab {
         inputField.setBackground(UI_color.FOG);
         new LoadFont(inputField, UI_font_path.RUSSOONE_REGULAR, DEFAULT_LABEL_TEXT_SIZE);
 
-        ((PlainDocument) inputField.getDocument()).setDocumentFilter(new LineFilter(inputField));
+        ((PlainDocument) inputField.getDocument()).setDocumentFilter(new LineFilter(inputField, 3));
 
         inputField.addFocusListener(new FocusAdapter() {
             public void focusGained(FocusEvent e) {
