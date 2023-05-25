@@ -1,3 +1,5 @@
+package com.GauPass;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,6 +11,8 @@ import com.GauPass.components.TitleBar.TitleBar;
 import com.GauPass.constants.*;
 
 public class MainFrame extends JFrame {
+
+    private OutputTab outputTabObject;
 
     public void initialize() {
         setUndecorated(true);
@@ -51,16 +55,25 @@ public class MainFrame extends JFrame {
 
         JPanel settingsTab = new SettingsTab().createSettingsTab();
 
-        JPanel keywordsTab = new KeywordsTab().createKeywordsTab();
-        keywordsTab.setBorder(BorderFactory.createMatteBorder(0, UI_size.APP_BORDER_THICKNESS, 0, UI_size.APP_BORDER_THICKNESS, UI_color.BLACK));
+        KeywordsTab keywordsTabObject = new KeywordsTab(this);
+        JPanel keywordsTab = keywordsTabObject.createKeywordsTab();
+        keywordsTab.setBorder(BorderFactory.createMatteBorder(0, UI_size.APP_BORDER_THICKNESS, 0,
+                UI_size.APP_BORDER_THICKNESS, UI_color.BLACK));
 
-        JPanel outputTab = new OutputTab().createOutputTab();
+        outputTabObject = new OutputTab();
+        JPanel outputTab = outputTabObject.createOutputTab();
 
         contentGrid.add(settingsTab);
         contentGrid.add(keywordsTab);
         contentGrid.add(outputTab);
 
         return contentGrid;
+    }
+
+    public void handleGenerateButton(String Keywords) {
+        // Handle the button press event in MainFrame
+        System.out.println(Keywords);
+        outputTabObject.setOutputTextArea(Keywords);
     }
 
 }
