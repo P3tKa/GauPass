@@ -12,18 +12,19 @@ public class CustomSliderUI extends BasicSliderUI {
     private ImageIcon thumbIcon;
     private Color leftColor;
     private Color rightColor;
-    private static final int BORDER_THICKNESS = 2;
+    private static final int BORDER_THICKNESS = 4;
 
-    public CustomSliderUI(JSlider slider, ImageIcon thumbIcon, Color leftColor, Color rightColor) {
+    public CustomSliderUI(JSlider slider, ImageIcon thumbIcon, JLabel lengthField, Color leftColor, Color rightColor) {
         super(slider);
         this.thumbIcon = thumbIcon;
         this.leftColor = leftColor;
         this.rightColor = rightColor;
-        
+
         slider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 slider.repaint();
+                lengthField.setText("" + slider.getValue());
             }
         });
         
@@ -36,10 +37,6 @@ public class CustomSliderUI extends BasicSliderUI {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         Rectangle thumbBounds = thumbRect;
-
-        // g2d.setColor(Color.BLACK);
-        // g2d.setStroke(new BasicStroke(5));
-        // g2d.draw(thumbBounds);
 
         if (thumbIcon != null) {
             int x = thumbBounds.x + (thumbBounds.width - thumbIcon.getIconWidth()) / 2;

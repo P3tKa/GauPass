@@ -8,21 +8,38 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import com.GauPass.constants.UI_color;
 import com.GauPass.constants.UI_font_path;
 import com.GauPass.constants.UI_icon_path;
-import com.GauPass.constants.UI_size;
+import com.GauPass.constants.UI_locale;
 import com.GauPass.utils.IconSizeChanger;
+import com.GauPass.utils.LoadFont;
 
 
 public class SettingsTab {
-    private final double FIRST_ROW_SIZE = 0.6;
-    private final double SECOND_ROW_SIZE = 0.4;
+    private final double CHECKBOX_FIELD_SIZE = 0.6;
+    private final double SLIDER_FIELD_SIZE = 0.4;
     private final int CHECKBOX_FIELD_SIDE_MARGINS = 50;
     private final int CHECKBOX_TOP_MARGIN = 30;
+
+    private final float SLIDER_LABEL_TEXT_SIZE = 20f;
+    private final float CURRENT_LENGTH_LABEL_TEXT_SIZE = 15f;
+
+    private final int SLIDER_WIDTH = 300;
+    private final int SLIDER_HEIGHT = 50;
+
+    private final int SLIDER_MAX_VALUE = 48;
+    private final int SLIDER_MIN_VALUE = 7;
+    private final int SLIDER_DEFAULT_VALUE = 14;
+    
+    private JLabel lengthField = new JLabel("" + SLIDER_DEFAULT_VALUE);
 
     private static final String SLIDER_THUMB = UI_icon_path.SLIDER_THUMB_ICON;
 
@@ -35,12 +52,12 @@ public class SettingsTab {
         c.weightx = 1.0;
 
         c.gridy = 0;
-        c.weighty = FIRST_ROW_SIZE;
+        c.weighty = CHECKBOX_FIELD_SIZE;
 
         settingsTab.add(createCheckboxField(), c);
         
         c.gridy = 1;
-        c.weighty = SECOND_ROW_SIZE;
+        c.weighty = SLIDER_FIELD_SIZE;
         settingsTab.add(createSliderField(), c);
 
         return settingsTab;
@@ -80,25 +97,62 @@ public class SettingsTab {
     public JPanel createSliderField() {
         JPanel sliderField = new JPanel(new GridBagLayout());
         sliderField.setBackground(UI_color.FOG);
-        JPanel sliderPanel = createSliderPanel();
 
-        sliderField.add(sliderPanel);
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.VERTICAL;
+
+        c.weighty = 0.2;
+        sliderField.add(createSliderLabelField(), c);
+
+        c.gridy = 2;
+        c.weighty = 0.2;
+        sliderField.add(createLengthTextContainer(), c);
+        
+        c.gridy = 1;
+        c.weighty = 0.6;
+        sliderField.add(createSliderPanel(), c);
 
         return sliderField;
     }
 
-    public JPanel createSliderPanel() {
+    public JPanel createLengthTextContainer() {
+        JPanel lengthTextContainer = new JPanel();
+        lengthTextContainer.setBackground(UI_color.FOG);
+
+        JLabel length = new JLabel(UI_locale.SLIDER_CURRENT_LENGTH_TEXT);
+        new LoadFont(length, UI_font_path.RUSSOONE_REGULAR, CURRENT_LENGTH_LABEL_TEXT_SIZE);
+
+        new LoadFont(lengthField, UI_font_path.RUSSOONE_REGULAR, CURRENT_LENGTH_LABEL_TEXT_SIZE);
+        lengthField.setBackground(UI_color.ELECTRIC_BLUE);
+        lengthField.setBorder(new CompoundBorder(new LineBorder(UI_color.BLACK, 2), new EmptyBorder(0, 5, 0, 5)));
+        lengthField.setOpaque(true);
+
+
+
+        lengthTextContainer.add(length);
+        lengthTextContainer.add(lengthField);
+
+        return lengthTextContainer;
+    }
+
+    public JLabel createSliderLabelField() {
+        JLabel labelField = new JLabel(UI_locale.SLIDER_PANEL_LABEL);
+        new LoadFont(labelField, UI_font_path.RUSSOONE_REGULAR, SLIDER_LABEL_TEXT_SIZE);
+
+        return labelField;
+    }
+
+    public JSlider createSliderPanel() {
         JPanel sliderPanel = new JPanel();
-        JSlider sizeSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 50);
-        sizeSlider.setPreferredSize(new Dimension(200, 50));
-        sizeSlider.setBackground(UI_color.FOG);
+        sliderPanel.setBackground(UI_color.FOG);
 
+        JSlider sizeSlider = new JSlider(JSlider.HORIZONTAL, SLIDER_MIN_VALUE, SLIDER_MAX_VALUE, SLIDER_DEFAULT_VALUE);
         ImageIcon thumbIcon = new IconSizeChanger().ChangeIconSize(new ImageIcon(SLIDER_THUMB), 20, 20);
+        sizeSlider.setUI(new CustomSliderUI(sizeSlider, thumbIcon, lengthField, UI_color.ELECTRIC_BLUE, UI_color.AMARANTH));
 
-        sizeSlider.setUI(new CustomSliderUI(sizeSlider, thumbIcon, UI_color.ELECTRIC_BLUE, UI_color.AMARANTH));
-
-        sliderPanel.add(sizeSlider);
+        sizeSlider.setPreferredSize(new Dimension(SLIDER_WIDTH, SLIDER_HEIGHT));
+        sizeSlider.setBackground(UI_color.FOG);
         
-        return sliderPanel;
+        return sizeSlider;
     } 
 }

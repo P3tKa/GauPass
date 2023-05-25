@@ -8,4 +8,8 @@ public class UI_locale {
     public static final String CHECKBOX_INCLUDE_NUMBERS = "Include Numbers";
     public static final String CHECKBOX_INCLUDE_SPEC_CHAR = "Include Special Characters";
     public static final String CHECKBOX_INCLUDE_CAP_LETTERS = "Include Capital Letters";
+
+    public static final String SLIDER_PANEL_LABEL = "Select Length:";
+    public static final String SLIDER_CURRENT_LENGTH_TEXT = "Length: ";
+
 }
