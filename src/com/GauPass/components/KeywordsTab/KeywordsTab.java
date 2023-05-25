@@ -2,6 +2,8 @@ package com.GauPass.components.KeywordsTab;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
@@ -18,17 +20,24 @@ import com.GauPass.constants.UI_locale;
 import com.GauPass.constants.UI_size;
 import com.GauPass.utils.LineFilter;
 import com.GauPass.utils.LoadFont;
+import com.GauPass.MainFrame;
 
 public class KeywordsTab {
     private final float DEFAULT_LABEL_TEXT_SIZE = 12f;
     private final double FIRST_ROW_SIZE = 0.2;
     private final double SECOND_ROW_SIZE = 0.8;
 
+    private MainFrame mainFrame;
+
+    public KeywordsTab(MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
+    }
+
     public JPanel createKeywordsTab() {
         JPanel keywordsTab = new JPanel(new GridBagLayout());
         keywordsTab.setBackground(UI_color.FOG);
         JTextArea inputField = createInputField();
-        JPanel buttonContainer = createButtonContainer(inputField);
+        JPanel buttonContainer = createButtonContainer(inputField, mainFrame);
 
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
@@ -64,12 +73,13 @@ public class KeywordsTab {
         return inputField;
     }
 
-    private JPanel createButtonContainer(JTextArea inputField) {
+    private JPanel createButtonContainer(JTextArea inputField, MainFrame mainFrame) {
 
         JPanel buttonContainer = new JPanel(new GridBagLayout());
         buttonContainer.setBackground(UI_color.FOG);
-        buttonContainer.setBorder(BorderFactory.createMatteBorder(UI_size.APP_BORDER_THICKNESS, 0, 0, 0, UI_color.BLACK));
-        JButton generateButton = new SubmitButton().createSubmitButton(buttonContainer, inputField);
+        buttonContainer
+                .setBorder(BorderFactory.createMatteBorder(UI_size.APP_BORDER_THICKNESS, 0, 0, 0, UI_color.BLACK));
+        JButton generateButton = new SubmitButton().createSubmitButton(buttonContainer, inputField, mainFrame);
         buttonContainer.add(generateButton);
 
         return buttonContainer;
