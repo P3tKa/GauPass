@@ -1,7 +1,11 @@
+package com.GauPass;
+import java.io.StringWriter;
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.GauPass.constants.UI_locale;
 
 public class PasswordGenerator {
     private String password;
@@ -13,7 +17,19 @@ public class PasswordGenerator {
         useNumbers = true;
         useSpecialChars = true;
     }
-
+    public void checkIfKeywordsUsed (String keyword, int value){
+        // *TODO
+        //fix
+        if(keyword.length() == 0 || keyword == UI_locale.KEYWORDS_DEFAULT_TEXT) {
+            password = generateGen(value);
+        } else {
+            password = generate(value, keyword);
+            System.out.println("veikia");
+        }
+    }
+    public String getPassword (){
+        return password;
+    }
     public void setUseNumbers(boolean useNumbers) {
         this.useNumbers = useNumbers;
     }
