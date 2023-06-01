@@ -9,7 +9,7 @@ Secure password generator written in Java
 &emsp;☒ Generate password of any length <br >
 &emsp;☐ Toggle to use special characters <br />
 &emsp;☐ Toggle to use Numbers <br />
-&emsp;☐ Quick copy to clipboard <br />
+&emsp;☒ Quick copy to clipboard <br />
 &emsp;☐ TBA <br />
 
 ##### Password Strength checker
