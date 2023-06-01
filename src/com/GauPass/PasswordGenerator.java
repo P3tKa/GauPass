@@ -20,13 +20,14 @@ public class PasswordGenerator {
     public void checkIfKeywordsUsed (String keyword, int value){
         // *TODO
         //fix
-        if(keyword.length() == 0 || keyword == UI_locale.KEYWORDS_DEFAULT_TEXT) {
-            password = generateGen(value);
-        } else {
-            password = generate(value, keyword);
-            System.out.println("veikia");
+            if (keyword.length() == 0 || keyword.equals(UI_locale.KEYWORDS_DEFAULT_TEXT)) {
+                password = generateGen(value);
+            } else {
+                password = generate(value, keyword);
+                System.out.println("veikia");
+            }
         }
-    }
+        
     public String getPassword (){
         return password;
     }
