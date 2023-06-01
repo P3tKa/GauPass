@@ -2,11 +2,13 @@ package com.GauPass;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 import com.GauPass.utils.ScreenSizeCalculator;
 import com.GauPass.components.KeywordsTab.KeywordsTab;
 import com.GauPass.components.OutputTab.OutputTab;
 import com.GauPass.components.OutputTab.ScrollableOutputArea;
+import com.GauPass.components.SettingsTab.CheckboxData;
 import com.GauPass.components.SettingsTab.SettingsTab;
 import com.GauPass.components.TitleBar.TitleBar;
 import com.GauPass.constants.*;
@@ -15,6 +17,7 @@ public class MainFrame extends JFrame {
 
     private OutputTab outputTabObject;
     private ScrollableOutputArea scrollableOutputArea;
+    private SettingsTab settingsTabObject;
 
     public void initialize() {
         setUndecorated(true);
@@ -55,7 +58,8 @@ public class MainFrame extends JFrame {
 
         JPanel contentGrid = new JPanel(new GridLayout(1, 3));
 
-        JPanel settingsTab = new SettingsTab().createSettingsTab();
+        settingsTabObject = new SettingsTab(this);
+        JPanel settingsTab = settingsTabObject.createSettingsTab();
 
         KeywordsTab keywordsTabObject = new KeywordsTab(this);
         JPanel keywordsTab = keywordsTabObject.createKeywordsTab();
@@ -83,7 +87,21 @@ public class MainFrame extends JFrame {
 
         JLabel outputPassword = new JLabel(Keywords);
         scrollableOutputArea.addComponent(outputPassword);
-        // outputTabObject.setOutputTextArea(Keywords);
+        // int value = settingsTabObject.getSliderValue();
+        System.out.println(value);
+
+        PasswordGenerator gen = new PasswordGenerator();
+        gen.checkIfKeywordsUsed(Keywords, value);
+
+        // ArrayList<CheckboxData> dataList = CheckboxData.getCheckboxDataList();
+        // for (CheckboxData checkboxData : dataList) {
+        // System.out.println("Text: " + checkboxData.getText());
+        // System.out.println("Checked: " + checkboxData.isChecked());
+        // System.out.println("ID: " + checkboxData.getId());
+        // System.out.println("--------------------");
+        // }
+
+        outputTabObject.setOutputTextArea(gen.getPassword());
     }
 
 }
