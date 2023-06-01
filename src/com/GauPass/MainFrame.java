@@ -85,9 +85,7 @@ public class MainFrame extends JFrame {
         // Handle the button press event in MainFrame
         System.out.println(Keywords);
 
-        JLabel outputPassword = new JLabel(Keywords);
-        scrollableOutputArea.addComponent(outputPassword);
-        // int value = settingsTabObject.getSliderValue();
+        int value = settingsTabObject.getSliderValue();
         System.out.println(value);
 
         PasswordGenerator gen = new PasswordGenerator();
@@ -101,7 +99,7 @@ public class MainFrame extends JFrame {
         // System.out.println("--------------------");
         // }
 
-        outputTabObject.setOutputTextArea(gen.getPassword());
+        JLabel outputPassword = new JLabel(gen.getPassword());
+        scrollableOutputArea.addComponent(outputPassword);
     }
-
 }
