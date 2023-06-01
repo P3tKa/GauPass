@@ -6,6 +6,7 @@ import java.awt.*;
 import com.GauPass.utils.ScreenSizeCalculator;
 import com.GauPass.components.KeywordsTab.KeywordsTab;
 import com.GauPass.components.OutputTab.OutputTab;
+import com.GauPass.components.OutputTab.ScrollableOutputArea;
 import com.GauPass.components.SettingsTab.SettingsTab;
 import com.GauPass.components.TitleBar.TitleBar;
 import com.GauPass.constants.*;
@@ -13,6 +14,7 @@ import com.GauPass.constants.*;
 public class MainFrame extends JFrame {
 
     private OutputTab outputTabObject;
+    private ScrollableOutputArea scrollableOutputArea;
 
     public void initialize() {
         setUndecorated(true);
@@ -63,6 +65,11 @@ public class MainFrame extends JFrame {
         outputTabObject = new OutputTab();
         JPanel outputTab = outputTabObject.createOutputTab();
 
+        /* Add scrollable Output Area */
+        scrollableOutputArea = new ScrollableOutputArea();
+        scrollableOutputArea.setLayout(new BoxLayout(scrollableOutputArea, BoxLayout.Y_AXIS));
+        outputTab.add(scrollableOutputArea);
+
         contentGrid.add(settingsTab);
         contentGrid.add(keywordsTab);
         contentGrid.add(outputTab);
@@ -73,7 +80,10 @@ public class MainFrame extends JFrame {
     public void handleGenerateButton(String Keywords) {
         // Handle the button press event in MainFrame
         System.out.println(Keywords);
-        outputTabObject.setOutputTextArea(Keywords);
+
+        JLabel outputPassword = new JLabel(Keywords);
+        scrollableOutputArea.addComponent(outputPassword);
+        // outputTabObject.setOutputTextArea(Keywords);
     }
 
 }
