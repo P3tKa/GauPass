@@ -1,5 +1,6 @@
 package com.GauPass.components.OutputTab;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,36 +17,30 @@ import com.GauPass.utils.ChangeCursorOnHover;
 import com.GauPass.utils.ChangeIconOnClick;
 import com.GauPass.utils.IconSizeChanger;
 
-// change this button to be like close/min
-public class ClipboardButton {
-    public JButton createClipboardButton(String outputText) {
-        JButton clipboardButton = new JButton();
+public class DeleteButton {
+    public JButton createDeleteButton(ScrollableOutputArea scrollableOutputArea, Component passwordPanel) {
+        JButton deleteButton = new JButton();
 
-        ImageIcon mainIcon = new IconSizeChanger().ChangeIconSize(new ImageIcon(UI_icon_path.CLIPBOARD_ICON),
+        ImageIcon mainIcon = new IconSizeChanger().ChangeIconSize(new ImageIcon(UI_icon_path.DELETE_ICON),
                 UI_size.TITLE_BAR_ICON_WIDTH, UI_size.TITLE_BAR_ICON_HEIGHT);
         ImageIcon onClickIcon = new IconSizeChanger().ChangeIconSize(new ImageIcon(UI_icon_path.MINIMIZE_ICON),
                 UI_size.TITLE_BAR_ICON_WIDTH, UI_size.TITLE_BAR_ICON_HEIGHT);
 
-        clipboardButton.setIcon(mainIcon);
-        new ChangeIconOnClick(clipboardButton, mainIcon, onClickIcon);
-        new ChangeCursorOnHover(clipboardButton);
+        deleteButton.setIcon(mainIcon);
+        new ChangeIconOnClick(deleteButton, mainIcon, onClickIcon);
+        new ChangeCursorOnHover(deleteButton);
 
-        clipboardButton.setBorder(BorderFactory.createCompoundBorder(
+        deleteButton.setBorder(BorderFactory.createCompoundBorder(
                 new MatteBorder(UI_size.APP_BORDER_THICKNESS, UI_size.APP_BORDER_THICKNESS,
                         0, 0, UI_color.BLACK),
                 new EmptyBorder(10, 10, 10, 10)));
 
-        clipboardButton.addActionListener(new ActionListener() {
+        deleteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                copyToClipboard(outputText);
+                scrollableOutputArea.removeComponent(passwordPanel);
             }
         });
 
-        return clipboardButton;
-    }
-
-    private static void copyToClipboard(String text) {
-        java.awt.Toolkit.getDefaultToolkit().getSystemClipboard()
-                .setContents(new java.awt.datatransfer.StringSelection(text), null);
+        return deleteButton;
     }
 }

@@ -19,8 +19,13 @@ public class ScrollableOutputArea extends JPanel {
         contentPanel = new JPanel();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
         contentPanel.setBackground(UI_color.MAUVE);
-        scrollPane = new JScrollPane(contentPanel);
+
+        JPanel contentPanelContainer = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        contentPanelContainer.setBackground(UI_color.MAUVE);
+        contentPanelContainer.add(contentPanel);
+        scrollPane = new JScrollPane(contentPanelContainer);
         scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         JScrollBar vertiScrollBar = scrollPane.getVerticalScrollBar();
         vertiScrollBar.setUI(new CustomScrollBarUI());
@@ -67,24 +72,4 @@ public class ScrollableOutputArea extends JPanel {
     public boolean getScrollableTracksViewportHeight() {
         return false;
     }
-
-    // public static void main(String[] args) {
-    // SwingUtilities.invokeLater(() -> {
-    // JFrame frame = new JFrame("ScrollablePanel Example");
-    // frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    // frame.setSize(300, 400);
-
-    // ScrollableOutputArea scrollableOutputArea = new ScrollableOutputArea();
-    // scrollableOutputArea.setLayout(new BoxLayout(scrollableOutputArea,
-    // BoxLayout.Y_AXIS));
-
-    // for (int i = 0; i < 20; i++) {
-    // JLabel label = new JLabel("Label " + (i + 1));
-    // scrollableOutputArea.addComponent(label);
-    // }
-
-    // frame.add(scrollableOutputArea);
-    // frame.setVisible(true);
-    // });
-    // }
 }

@@ -6,6 +6,9 @@ import java.util.ArrayList;
 
 import com.GauPass.utils.ScreenSizeCalculator;
 import com.GauPass.components.KeywordsTab.KeywordsTab;
+import com.GauPass.components.OutputTab.ClipboardButton;
+import com.GauPass.components.OutputTab.DeleteButton;
+import com.GauPass.components.OutputTab.MaxLengthLabel;
 import com.GauPass.components.OutputTab.OutputTab;
 import com.GauPass.components.OutputTab.ScrollableOutputArea;
 import com.GauPass.components.SettingsTab.CheckboxData;
@@ -27,8 +30,8 @@ public class MainFrame extends JFrame {
 
         JPanel contentPane = createContentPane();
         setContentPane(contentPane);
-
         setVisible(true);
+        this.pack();
     }
 
     public void setScreenSize(double widthPercentage, double heightPercentage) {
@@ -58,7 +61,7 @@ public class MainFrame extends JFrame {
 
         JPanel contentGrid = new JPanel(new GridLayout(1, 3));
 
-        settingsTabObject = new SettingsTab(this);
+        settingsTabObject = new SettingsTab();
         JPanel settingsTab = settingsTabObject.createSettingsTab();
 
         KeywordsTab keywordsTabObject = new KeywordsTab(this);
@@ -91,15 +94,37 @@ public class MainFrame extends JFrame {
         PasswordGenerator gen = new PasswordGenerator();
         gen.checkIfKeywordsUsed(Keywords, value);
 
-        // ArrayList<CheckboxData> dataList = CheckboxData.getCheckboxDataList();
-        // for (CheckboxData checkboxData : dataList) {
-        // System.out.println("Text: " + checkboxData.getText());
-        // System.out.println("Checked: " + checkboxData.isChecked());
-        // System.out.println("ID: " + checkboxData.getId());
-        // System.out.println("--------------------");
-        // }
+        boolean includeNumbers = false,
+                includeSpecialChars = false,
+                includeCapitalLetters = false;
 
-        JLabel outputPassword = new JLabel(gen.getPassword());
-        scrollableOutputArea.addComponent(outputPassword);
+        ArrayList<CheckboxData> dataList = CheckboxData.getCheckboxDataList();
+        includeNumbers = dataList.get(0).isChecked();
+        includeSpecialChars = dataList.get(1).isChecked();
+        includeCapitalLetters = dataList.get(2).isChecked();
+
+        System.out.println("includeNumbers: " + includeNumbers +
+                "\nincludeSpecialChars: " + includeSpecialChars +
+                "\nincludeCapitalLetters: " + includeCapitalLetters);
+
+        JPanel passwordPanel = new JPanel();
+        passwordPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+        /* Set the maximum label length */
+        MaxLengthLabel outputPassword = new MaxLengthLabel(24);
+        outputPassword.setText(gen.getPassword());
+
+        /* Create clipboard button */
+        JButton clipboardButton = new ClipboardButton().createClipboardButton(gen.getPassword());
+
+        /* Create delete button */
+        JButton deleteButton = new DeleteButton().createDeleteButton(scrollableOutputArea, passwordPanel);
+
+        passwordPanel.add(outputPassword);
+        passwordPanel.add(clipboardButton);
+        passwordPanel.add(deleteButton);
+        passwordPanel.setBackground(UI_color.MAUVE);
+
+        scrollableOutputArea.addComponent(passwordPanel);
     }
 }

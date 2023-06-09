@@ -15,14 +15,12 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import com.GauPass.MainFrame;
 import com.GauPass.constants.UI_color;
 import com.GauPass.constants.UI_font_path;
 import com.GauPass.constants.UI_icon_path;
 import com.GauPass.constants.UI_locale;
 import com.GauPass.utils.IconSizeChanger;
 import com.GauPass.utils.LoadFont;
-
 
 public class SettingsTab {
     private final double CHECKBOX_FIELD_SIZE = 0.6;
@@ -41,16 +39,12 @@ public class SettingsTab {
     private final int SLIDER_DEFAULT_VALUE = 14;
 
     private JSlider sizeSlider;
-    
+
     private JLabel lengthField = new JLabel("" + SLIDER_DEFAULT_VALUE);
 
     private static final String SLIDER_THUMB = UI_icon_path.SLIDER_THUMB_ICON;
 
-    
-    private MainFrame mainFrame;
-
-    public SettingsTab(MainFrame mainFrame) {
-        this.mainFrame = mainFrame;
+    public SettingsTab() {
     }
 
     public JPanel createSettingsTab() {
@@ -65,7 +59,7 @@ public class SettingsTab {
         c.weighty = CHECKBOX_FIELD_SIZE;
 
         settingsTab.add(createCheckboxField(), c);
-        
+
         c.gridy = 1;
         c.weighty = SLIDER_FIELD_SIZE;
         settingsTab.add(createSliderField(), c);
@@ -75,7 +69,8 @@ public class SettingsTab {
 
     private JPanel createCheckboxField() {
         JPanel checkboxField = new JPanel(new GridBagLayout());
-        checkboxField.setBorder(BorderFactory.createEmptyBorder(0, CHECKBOX_FIELD_SIDE_MARGINS, 0, CHECKBOX_FIELD_SIDE_MARGINS));
+        checkboxField.setBorder(
+                BorderFactory.createEmptyBorder(0, CHECKBOX_FIELD_SIDE_MARGINS, 0, CHECKBOX_FIELD_SIDE_MARGINS));
         checkboxField.setBackground(UI_color.FOG);
 
         GridBagConstraints c = new GridBagConstraints();
@@ -85,20 +80,22 @@ public class SettingsTab {
 
         storeCheckboxData();
         ArrayList<CheckboxData> checkboxDataList = CheckboxData.getCheckboxDataList();
-    
-        for(int i = 0; i < checkboxDataList.size(); ++i) {
+
+        for (int i = 0; i < checkboxDataList.size(); ++i) {
             c.gridy = i;
-    
+
             CheckboxData checkboxData = checkboxDataList.get(i);
-            checkboxField.add(new SettingsCheckbox(checkboxData.getText(), UI_font_path.RUSSOONE_REGULAR, checkboxData.getId()), c);
+            checkboxField.add(
+                    new SettingsCheckbox(checkboxData.getText(), UI_font_path.RUSSOONE_REGULAR, checkboxData.getId()),
+                    c);
         }
-    
+
         return checkboxField;
     }
-    
+
     private void storeCheckboxData() {
         String[] fieldText = CheckboxLabelConst.getFieldText();
-    
+
         for (int i = 0; i < fieldText.length; ++i) {
             new CheckboxData(fieldText[i], false, i);
         }
@@ -117,7 +114,7 @@ public class SettingsTab {
         c.gridy = 2;
         c.weighty = 0.2;
         sliderField.add(createLengthTextContainer(), c);
-        
+
         c.gridy = 1;
         c.weighty = 0.6;
         sliderField.add(createSliderPanel(), c);
@@ -136,8 +133,6 @@ public class SettingsTab {
         lengthField.setBackground(UI_color.ELECTRIC_BLUE);
         lengthField.setBorder(new CompoundBorder(new LineBorder(UI_color.BLACK, 2), new EmptyBorder(0, 5, 0, 5)));
         lengthField.setOpaque(true);
-
-
 
         lengthTextContainer.add(length);
         lengthTextContainer.add(lengthField);
@@ -158,13 +153,14 @@ public class SettingsTab {
 
         sizeSlider = new JSlider(JSlider.HORIZONTAL, SLIDER_MIN_VALUE, SLIDER_MAX_VALUE, SLIDER_DEFAULT_VALUE);
         ImageIcon thumbIcon = new IconSizeChanger().ChangeIconSize(new ImageIcon(SLIDER_THUMB), 20, 20);
-        sizeSlider.setUI(new CustomSliderUI(sizeSlider, thumbIcon, lengthField, UI_color.ELECTRIC_BLUE, UI_color.AMARANTH));
+        sizeSlider.setUI(
+                new CustomSliderUI(sizeSlider, thumbIcon, lengthField, UI_color.ELECTRIC_BLUE, UI_color.AMARANTH));
 
         sizeSlider.setPreferredSize(new Dimension(SLIDER_WIDTH, SLIDER_HEIGHT));
         sizeSlider.setBackground(UI_color.FOG);
-        
+
         return sizeSlider;
-    } 
+    }
 
     public int getSliderValue() {
         return sizeSlider.getValue();
