@@ -16,5 +16,6 @@ public class UI_icon_path {
 
     public static final String CLIPBOARD_ICON = "src/com/GauPass/assets/clipboardIcon.png";
 
-    public static final String DELETE_ICON = "src/com/GauPass/assets/deleteIcon.png";
+    public static final String DELETE_ICON = "src/com/GauPass/assets/delete_icon.png";
+    public static final String DELETE_ICON_HOVER = "src/com/GauPass/assets/delete_icon_hover.png";
 }

@@ -29,8 +29,8 @@ public class ScrollableOutputArea extends JPanel {
 
         JScrollBar vertiScrollBar = scrollPane.getVerticalScrollBar();
         vertiScrollBar.setUI(new CustomScrollBarUI());
-        Border matteBorder = BorderFactory.createMatteBorder(UI_size.APP_BORDER_THICKNESS, UI_size.APP_BORDER_THICKNESS,
-                UI_size.APP_BORDER_THICKNESS, UI_size.APP_BORDER_THICKNESS, UI_color.BLACK);
+        Border matteBorder = BorderFactory.createMatteBorder(0, UI_size.APP_BORDER_THICKNESS,
+                0, 0, UI_color.BLACK);
         Border colorBorder = BorderFactory.createLineBorder(UI_color.MAUVE, 1);
         Border compoundBorder = BorderFactory.createCompoundBorder(matteBorder, colorBorder);
         vertiScrollBar.setBorder(compoundBorder);

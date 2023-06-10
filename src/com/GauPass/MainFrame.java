@@ -111,7 +111,8 @@ public class MainFrame extends JFrame {
         passwordPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
         /* Set the maximum label length */
-        MaxLengthLabel outputPassword = new MaxLengthLabel(24);
+        // MaxLengthLabel outputPassword = new MaxLengthLabel(24);
+        JLabel outputPassword = new JLabel();
         outputPassword.setText(gen.getPassword());
 
         /* Create clipboard button */

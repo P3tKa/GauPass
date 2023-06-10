@@ -1,5 +1,6 @@
 package com.GauPass.components.OutputTab;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,6 +9,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
 import com.GauPass.constants.UI_color;
@@ -15,6 +17,7 @@ import com.GauPass.constants.UI_icon_path;
 import com.GauPass.constants.UI_size;
 import com.GauPass.utils.ChangeCursorOnHover;
 import com.GauPass.utils.ChangeIconOnClick;
+import com.GauPass.utils.ChangeIconOnHover;
 import com.GauPass.utils.IconSizeChanger;
 
 public class DeleteButton {
@@ -22,18 +25,17 @@ public class DeleteButton {
         JButton deleteButton = new JButton();
 
         ImageIcon mainIcon = new IconSizeChanger().ChangeIconSize(new ImageIcon(UI_icon_path.DELETE_ICON),
-                UI_size.TITLE_BAR_ICON_WIDTH, UI_size.TITLE_BAR_ICON_HEIGHT);
-        ImageIcon onClickIcon = new IconSizeChanger().ChangeIconSize(new ImageIcon(UI_icon_path.MINIMIZE_ICON),
-                UI_size.TITLE_BAR_ICON_WIDTH, UI_size.TITLE_BAR_ICON_HEIGHT);
+                40, 50);
+        ImageIcon onHover = new IconSizeChanger().ChangeIconSize(new ImageIcon(UI_icon_path.DELETE_ICON_HOVER),
+                40, 50);
 
         deleteButton.setIcon(mainIcon);
-        new ChangeIconOnClick(deleteButton, mainIcon, onClickIcon);
+        new ChangeIconOnHover(deleteButton, mainIcon, onHover);
         new ChangeCursorOnHover(deleteButton);
 
-        deleteButton.setBorder(BorderFactory.createCompoundBorder(
-                new MatteBorder(UI_size.APP_BORDER_THICKNESS, UI_size.APP_BORDER_THICKNESS,
-                        0, 0, UI_color.BLACK),
-                new EmptyBorder(10, 10, 10, 10)));
+        deleteButton.setContentAreaFilled(false);
+        deleteButton.setFocusPainted(false);
+        deleteButton.setBorderPainted(false);
 
         deleteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

@@ -35,13 +35,9 @@ public class SubmitButton {
             @Override
             public void actionPerformed(ActionEvent e) {
                 mainframe.handleGenerateButton(keywordField.getText());
-                keywordField.setText("");
             }
         });
 
         return button;
-    }
-
-    public void addActionListener(KeywordsTab keywordsTab) {
     }
 }

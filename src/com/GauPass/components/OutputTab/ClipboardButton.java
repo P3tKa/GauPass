@@ -22,18 +22,17 @@ public class ClipboardButton {
         JButton clipboardButton = new JButton();
 
         ImageIcon mainIcon = new IconSizeChanger().ChangeIconSize(new ImageIcon(UI_icon_path.CLIPBOARD_ICON),
-                UI_size.TITLE_BAR_ICON_WIDTH, UI_size.TITLE_BAR_ICON_HEIGHT);
+               40, 50);
         ImageIcon onClickIcon = new IconSizeChanger().ChangeIconSize(new ImageIcon(UI_icon_path.MINIMIZE_ICON),
-                UI_size.TITLE_BAR_ICON_WIDTH, UI_size.TITLE_BAR_ICON_HEIGHT);
+                40, 50);
 
         clipboardButton.setIcon(mainIcon);
         new ChangeIconOnClick(clipboardButton, mainIcon, onClickIcon);
         new ChangeCursorOnHover(clipboardButton);
 
-        clipboardButton.setBorder(BorderFactory.createCompoundBorder(
-                new MatteBorder(UI_size.APP_BORDER_THICKNESS, UI_size.APP_BORDER_THICKNESS,
-                        0, 0, UI_color.BLACK),
-                new EmptyBorder(10, 10, 10, 10)));
+        clipboardButton.setContentAreaFilled(false);
+        clipboardButton.setFocusPainted(false);
+        clipboardButton.setBorderPainted(false);
 
         clipboardButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
