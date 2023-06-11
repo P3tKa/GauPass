@@ -16,6 +16,7 @@ import com.GauPass.components.OutputTab.DeleteButton;
 import com.GauPass.components.OutputTab.PasswordRowBlock;
 import com.GauPass.components.OutputTab.ScrollableOutputArea;
 import com.GauPass.components.SettingsTab.CheckboxData;
+import com.GauPass.components.SettingsTab.SettingsCheckbox;
 import com.GauPass.components.SettingsTab.SettingsTab;
 import com.GauPass.components.TitleBar.TitleBar;
 import com.GauPass.constants.*;
@@ -92,18 +93,13 @@ public class MainFrame extends JFrame {
         PasswordGenerator gen = new PasswordGenerator();
         gen.checkIfKeywordsUsed(Keywords, value);
 
-        boolean includeNumbers = false,
-                includeSpecialChars = false,
-                includeCapitalLetters = false;
-
-        ArrayList<CheckboxData> dataList = CheckboxData.getCheckboxDataList();
-        includeNumbers = dataList.get(0).isChecked();
-        includeSpecialChars = dataList.get(1).isChecked();
-        includeCapitalLetters = dataList.get(2).isChecked();
-
-        System.out.println("includeNumbers: " + includeNumbers +
-                "\nincludeSpecialChars: " + includeSpecialChars +
-                "\nincludeCapitalLetters: " + includeCapitalLetters);
+        // how to check if a specific checkbox is checked
+        SettingsCheckbox checkbox1 = SettingsCheckbox.getCheckboxById(UI_locale.CHECKBOX_INCLUDE_NUMBERS);
+        SettingsCheckbox checkbox2 = SettingsCheckbox.getCheckboxById(UI_locale.CHECKBOX_INCLUDE_SPEC_CHAR);
+        SettingsCheckbox checkbox3 = SettingsCheckbox.getCheckboxById(UI_locale.CHECKBOX_INCLUDE_CAP_LETTERS);
+        System.out.println("checkbox 1: " + checkbox1.isChecked());
+        System.out.println("checkbox 2: " + checkbox2.isChecked());
+        System.out.println("checkbox 3: " + checkbox3.isChecked());
 
         PasswordRowBlock passwordBlock = new PasswordRowBlock(gen, scrollableOutputArea);
         scrollableOutputArea.addComponent(passwordBlock);

@@ -79,27 +79,14 @@ public class SettingsTab {
         c.weightx = 1;
         c.insets = new Insets(CHECKBOX_TOP_MARGIN, 0, 0, 0);
 
-        storeCheckboxData();
-        ArrayList<CheckboxData> checkboxDataList = CheckboxData.getCheckboxDataList();
-
-        for (int i = 0; i < checkboxDataList.size(); ++i) {
+        String[] data = new CheckboxData().getCheckboxData();
+        for (int i = 0; i < data.length; ++i) {
             c.gridy = i;
 
-            CheckboxData checkboxData = checkboxDataList.get(i);
-            checkboxField.add(
-                    new SettingsCheckbox(checkboxData.getText(), UI_font_path.RUSSOONE_REGULAR, checkboxData.getId()),
-                    c);
+            checkboxField.add(new SettingsCheckbox(data[i], UI_font_path.RUSSOONE_REGULAR, data[i]),c);
         }
 
         return checkboxField;
-    }
-
-    private void storeCheckboxData() {
-        String[] fieldText = CheckboxLabelConst.getFieldText();
-
-        for (int i = 0; i < fieldText.length; ++i) {
-            new CheckboxData(fieldText[i], false, i);
-        }
     }
 
     public JPanel createSliderField() {

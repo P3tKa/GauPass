@@ -11,9 +11,12 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SettingsCheckbox extends JPanel {
+
+    private static HashMap<String, SettingsCheckbox> checkboxMap = new HashMap<>();
+
     private static final String UNSELECTED_DEFAULT = UI_icon_path.CHECKBOX_UNSELECTED_DEFAULT;
     private static final String UNSELECTED_HOVER = UI_icon_path.CHECKBOX_UNSELECTED_HOVER;
     private static final String ONCLICK = UI_icon_path.CHECKBOX_ONCLICK;
@@ -38,10 +41,7 @@ public class SettingsCheckbox extends JPanel {
     private String text;
     private String fontPath;
 
-    private int id;
-
-    public SettingsCheckbox(String text, String fontPath, int id) {
-        this.id = id;
+    public SettingsCheckbox(String text, String fontPath, String id) {
         this.text = text;
         this.fontPath = fontPath;
         this.isHovered = false;
@@ -55,6 +55,8 @@ public class SettingsCheckbox extends JPanel {
         loadImages();
         addTextLabel();
         addMouseEvents();
+
+        checkboxMap.put(id, this);
     }
 
     private void addMouseEvents() {
@@ -86,30 +88,23 @@ public class SettingsCheckbox extends JPanel {
                 } else {
                     label.setForeground(UI_color.BLACK);
                 }
-                isChecked = !isChecked;
-                updateToClicked();
+                setChecked(!isChecked);
                 
                 repaint(); 
             }
         });
     }
-    // bad implementation since every checkbox has to checked for id
-    private void updateToClicked() {
-        ArrayList<CheckboxData> checkboxDataList = CheckboxData.getCheckboxDataList();
-        for (CheckboxData checkboxData : checkboxDataList) {
-            if (checkboxData.getId() == id) {
-                checkboxData.setChecked(isChecked);
-                break;
-            }
-        }
+
+    public void setChecked(boolean checked) {
+        this.isChecked = checked;
     }
     
     public boolean isChecked() {
         return isChecked;
     }
 
-    public int getId() {
-        return id;
+    public static SettingsCheckbox getCheckboxById(String id) {
+        return checkboxMap.get(id);
     }
 
     @Override
