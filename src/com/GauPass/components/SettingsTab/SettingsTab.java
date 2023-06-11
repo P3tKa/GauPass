@@ -15,6 +15,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import com.GauPass.constants.APP_settings;
 import com.GauPass.constants.UI_color;
 import com.GauPass.constants.UI_font_path;
 import com.GauPass.constants.UI_icon_path;
@@ -34,8 +35,8 @@ public class SettingsTab {
     private final int SLIDER_WIDTH = 300;
     private final int SLIDER_HEIGHT = 50;
 
-    private final int SLIDER_MAX_VALUE = 48;
-    private final int SLIDER_MIN_VALUE = 7;
+    private final int SLIDER_MAX_VALUE = APP_settings.MAX_PASSWORD_LENGTH;
+    private final int SLIDER_MIN_VALUE = APP_settings.MIN_PASSWORD_LENGTH;
     private final int SLIDER_DEFAULT_VALUE = 14;
 
     private JSlider sizeSlider;

@@ -1,6 +1,11 @@
 package com.GauPass;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -8,8 +13,7 @@ import com.GauPass.utils.ScreenSizeCalculator;
 import com.GauPass.components.KeywordsTab.KeywordsTab;
 import com.GauPass.components.OutputTab.ClipboardButton;
 import com.GauPass.components.OutputTab.DeleteButton;
-import com.GauPass.components.OutputTab.MaxLengthLabel;
-import com.GauPass.components.OutputTab.OutputTab;
+import com.GauPass.components.OutputTab.PasswordRowBlock;
 import com.GauPass.components.OutputTab.ScrollableOutputArea;
 import com.GauPass.components.SettingsTab.CheckboxData;
 import com.GauPass.components.SettingsTab.SettingsTab;
@@ -18,7 +22,6 @@ import com.GauPass.constants.*;
 
 public class MainFrame extends JFrame {
 
-    private OutputTab outputTabObject;
     private ScrollableOutputArea scrollableOutputArea;
     private SettingsTab settingsTabObject;
 
@@ -31,7 +34,7 @@ public class MainFrame extends JFrame {
         JPanel contentPane = createContentPane();
         setContentPane(contentPane);
         setVisible(true);
-        this.pack();
+        // this.pack();
     }
 
     public void setScreenSize(double widthPercentage, double heightPercentage) {
@@ -69,17 +72,12 @@ public class MainFrame extends JFrame {
         keywordsTab.setBorder(BorderFactory.createMatteBorder(0, UI_size.APP_BORDER_THICKNESS, 0,
                 UI_size.APP_BORDER_THICKNESS, UI_color.BLACK));
 
-        outputTabObject = new OutputTab();
-        JPanel outputTab = outputTabObject.createOutputTab();
-
         /* Add scrollable Output Area */
         scrollableOutputArea = new ScrollableOutputArea();
-        scrollableOutputArea.setLayout(new BoxLayout(scrollableOutputArea, BoxLayout.Y_AXIS));
-        outputTab.add(scrollableOutputArea);
 
         contentGrid.add(settingsTab);
         contentGrid.add(keywordsTab);
-        contentGrid.add(outputTab);
+        contentGrid.add(scrollableOutputArea);
 
         return contentGrid;
     }
@@ -107,25 +105,7 @@ public class MainFrame extends JFrame {
                 "\nincludeSpecialChars: " + includeSpecialChars +
                 "\nincludeCapitalLetters: " + includeCapitalLetters);
 
-        JPanel passwordPanel = new JPanel();
-        passwordPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-
-        /* Set the maximum label length */
-        // MaxLengthLabel outputPassword = new MaxLengthLabel(24);
-        JLabel outputPassword = new JLabel();
-        outputPassword.setText(gen.getPassword());
-
-        /* Create clipboard button */
-        JButton clipboardButton = new ClipboardButton().createClipboardButton(gen.getPassword());
-
-        /* Create delete button */
-        JButton deleteButton = new DeleteButton().createDeleteButton(scrollableOutputArea, passwordPanel);
-
-        passwordPanel.add(outputPassword);
-        passwordPanel.add(clipboardButton);
-        passwordPanel.add(deleteButton);
-        passwordPanel.setBackground(UI_color.MAUVE);
-
-        scrollableOutputArea.addComponent(passwordPanel);
+        PasswordRowBlock passwordBlock = new PasswordRowBlock(gen, scrollableOutputArea);
+        scrollableOutputArea.addComponent(passwordBlock);
     }
 }

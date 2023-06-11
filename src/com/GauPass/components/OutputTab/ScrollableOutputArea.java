@@ -3,6 +3,7 @@ package com.GauPass.components.OutputTab;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import com.GauPass.constants.UI_color;
 import com.GauPass.constants.UI_size;
@@ -16,13 +17,15 @@ public class ScrollableOutputArea extends JPanel {
 
     public ScrollableOutputArea() {
         setLayout(new BorderLayout());
+
         contentPanel = new JPanel();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
         contentPanel.setBackground(UI_color.MAUVE);
 
-        JPanel contentPanelContainer = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel contentPanelContainer = new JPanel(new BorderLayout());
         contentPanelContainer.setBackground(UI_color.MAUVE);
-        contentPanelContainer.add(contentPanel);
+        contentPanelContainer.add(contentPanel, BorderLayout.NORTH);
+
         scrollPane = new JScrollPane(contentPanelContainer);
         scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -34,7 +37,6 @@ public class ScrollableOutputArea extends JPanel {
         Border colorBorder = BorderFactory.createLineBorder(UI_color.MAUVE, 1);
         Border compoundBorder = BorderFactory.createCompoundBorder(matteBorder, colorBorder);
         vertiScrollBar.setBorder(compoundBorder);
-
         add(scrollPane, BorderLayout.CENTER);
     }
 

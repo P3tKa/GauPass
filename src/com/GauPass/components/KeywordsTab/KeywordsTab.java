@@ -58,6 +58,7 @@ public class KeywordsTab {
         JTextArea inputField = new JTextArea(UI_locale.KEYWORDS_DEFAULT_TEXT);
         inputField.setBorder(BorderFactory.createEmptyBorder(5, 5, -100, 0));
         inputField.setBackground(UI_color.FOG);
+        inputField.setLineWrap(true);
         new LoadFont(inputField, UI_font_path.RUSSOONE_REGULAR, DEFAULT_LABEL_TEXT_SIZE);
 
         ((PlainDocument) inputField.getDocument()).setDocumentFilter(new LineFilter(inputField, 3));

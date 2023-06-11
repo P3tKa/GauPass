@@ -15,6 +15,7 @@ public class UI_icon_path {
     public static final String SLIDER_THUMB_ICON = "src/com/GauPass/assets/checkbox_selected_default.png";
 
     public static final String CLIPBOARD_ICON = "src/com/GauPass/assets/clipboardIcon.png";
+    public static final String CLIPBOARD_ICON_HOVER = "src/com/GauPass/assets/clipboard_icon_hover.png";
 
     public static final String DELETE_ICON = "src/com/GauPass/assets/delete_icon.png";
     public static final String DELETE_ICON_HOVER = "src/com/GauPass/assets/delete_icon_hover.png";

@@ -5,44 +5,39 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.border.MatteBorder;
+import javax.swing.JPanel;
 
-import com.GauPass.constants.UI_color;
 import com.GauPass.constants.UI_icon_path;
-import com.GauPass.constants.UI_size;
 import com.GauPass.utils.ChangeCursorOnHover;
-import com.GauPass.utils.ChangeIconOnClick;
 import com.GauPass.utils.ChangeIconOnHover;
 import com.GauPass.utils.IconSizeChanger;
 
-public class DeleteButton {
-    public JButton createDeleteButton(ScrollableOutputArea scrollableOutputArea, Component passwordPanel) {
-        JButton deleteButton = new JButton();
+public class DeleteButton extends JButton {
+
+    private static final int ICON_WIDTH = 35;
+    private static final int ICON_HEIGHT = 40;
+
+    public DeleteButton(ScrollableOutputArea scrollableOutputArea, JPanel passwordPanel) {
 
         ImageIcon mainIcon = new IconSizeChanger().ChangeIconSize(new ImageIcon(UI_icon_path.DELETE_ICON),
-                40, 50);
+                 ICON_WIDTH, ICON_HEIGHT);
         ImageIcon onHover = new IconSizeChanger().ChangeIconSize(new ImageIcon(UI_icon_path.DELETE_ICON_HOVER),
-                40, 50);
+                 ICON_WIDTH, ICON_HEIGHT);
 
-        deleteButton.setIcon(mainIcon);
-        new ChangeIconOnHover(deleteButton, mainIcon, onHover);
-        new ChangeCursorOnHover(deleteButton);
+        setIcon(mainIcon);
+        new ChangeIconOnHover(this, mainIcon, onHover);
+        new ChangeCursorOnHover(this);
 
-        deleteButton.setContentAreaFilled(false);
-        deleteButton.setFocusPainted(false);
-        deleteButton.setBorderPainted(false);
+        setContentAreaFilled(false);
+        setFocusPainted(false);
+        setBorderPainted(false);
 
-        deleteButton.addActionListener(new ActionListener() {
+        addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 scrollableOutputArea.removeComponent(passwordPanel);
             }
         });
-
-        return deleteButton;
     }
 }

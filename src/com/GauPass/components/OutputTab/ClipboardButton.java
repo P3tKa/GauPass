@@ -2,45 +2,40 @@ package com.GauPass.components.OutputTab;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
 
-import com.GauPass.constants.UI_color;
 import com.GauPass.constants.UI_icon_path;
-import com.GauPass.constants.UI_size;
 import com.GauPass.utils.ChangeCursorOnHover;
 import com.GauPass.utils.ChangeIconOnClick;
+import com.GauPass.utils.ChangeIconOnHover;
 import com.GauPass.utils.IconSizeChanger;
 
-// change this button to be like close/min
-public class ClipboardButton {
-    public JButton createClipboardButton(String outputText) {
-        JButton clipboardButton = new JButton();
+public class ClipboardButton extends JButton {
+
+    private static final int ICON_WIDTH = 35;
+    private static final int ICON_HEIGHT = 40;
+
+    public ClipboardButton(String outputText) {
 
         ImageIcon mainIcon = new IconSizeChanger().ChangeIconSize(new ImageIcon(UI_icon_path.CLIPBOARD_ICON),
-               40, 50);
-        ImageIcon onClickIcon = new IconSizeChanger().ChangeIconSize(new ImageIcon(UI_icon_path.MINIMIZE_ICON),
-                40, 50);
+               ICON_WIDTH, ICON_HEIGHT);
+        ImageIcon onHover = new IconSizeChanger().ChangeIconSize(new ImageIcon(UI_icon_path.CLIPBOARD_ICON_HOVER),
+                ICON_WIDTH, ICON_HEIGHT);
 
-        clipboardButton.setIcon(mainIcon);
-        new ChangeIconOnClick(clipboardButton, mainIcon, onClickIcon);
-        new ChangeCursorOnHover(clipboardButton);
+        setIcon(mainIcon);
+        new ChangeIconOnHover(this, mainIcon, onHover);
+        new ChangeCursorOnHover(this);
 
-        clipboardButton.setContentAreaFilled(false);
-        clipboardButton.setFocusPainted(false);
-        clipboardButton.setBorderPainted(false);
+        setContentAreaFilled(false);
+        setFocusPainted(false);
+        setBorderPainted(false);
 
-        clipboardButton.addActionListener(new ActionListener() {
+        addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 copyToClipboard(outputText);
             }
         });
-
-        return clipboardButton;
     }
 
     private static void copyToClipboard(String text) {
