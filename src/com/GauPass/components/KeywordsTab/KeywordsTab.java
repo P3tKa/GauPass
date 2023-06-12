@@ -1,5 +1,8 @@
 package com.GauPass.components.KeywordsTab;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -24,10 +27,13 @@ import com.GauPass.MainFrame;
 
 public class KeywordsTab {
     private final float DEFAULT_LABEL_TEXT_SIZE = 12f;
+
     private final double FIRST_ROW_SIZE = 0.2;
-    private final double SECOND_ROW_SIZE = 0.8;
+    private final double SECOND_ROW_SIZE = 0.01;
+    private final double THIRD_ROW_SIZE = 0.79;
 
     private MainFrame mainFrame;
+    private JTextArea inputField;
 
     public KeywordsTab(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
@@ -36,6 +42,7 @@ public class KeywordsTab {
     public JPanel createKeywordsTab() {
         JPanel keywordsTab = new JPanel(new GridBagLayout());
         keywordsTab.setBackground(UI_color.FOG);
+
         JTextArea inputField = createInputField();
         JPanel buttonContainer = createButtonContainer(inputField, mainFrame);
 
@@ -45,9 +52,13 @@ public class KeywordsTab {
         c.weighty = FIRST_ROW_SIZE;
         keywordsTab.add(inputField, c);
 
-        c.gridwidth = 1;
-        c.weighty = SECOND_ROW_SIZE;
         c.gridy = 1;
+        c.weighty = SECOND_ROW_SIZE;
+        keywordsTab.add(createHorizontalButtonsPanel(), c);
+
+        c.gridwidth = 1;
+        c.weighty = THIRD_ROW_SIZE;
+        c.gridy = 2;
         keywordsTab.add(buttonContainer, c);
 
         return keywordsTab;
@@ -55,7 +66,7 @@ public class KeywordsTab {
 
     private JTextArea createInputField() {
 
-        JTextArea inputField = new JTextArea(UI_locale.KEYWORDS_DEFAULT_TEXT);
+        this.inputField = new JTextArea(UI_locale.KEYWORDS_DEFAULT_TEXT);
         inputField.setBorder(BorderFactory.createEmptyBorder(5, 5, -100, 0));
         inputField.setBackground(UI_color.FOG);
         inputField.setLineWrap(true);
@@ -78,11 +89,23 @@ public class KeywordsTab {
 
         JPanel buttonContainer = new JPanel(new GridBagLayout());
         buttonContainer.setBackground(UI_color.FOG);
-        buttonContainer
-                .setBorder(BorderFactory.createMatteBorder(UI_size.APP_BORDER_THICKNESS, 0, 0, 0, UI_color.BLACK));
         JButton generateButton = new SubmitButton().createSubmitButton(buttonContainer, inputField, mainFrame);
         buttonContainer.add(generateButton);
 
         return buttonContainer;
     }
+
+    private JPanel createHorizontalButtonsPanel() {
+        JPanel buttonsContainer = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        buttonsContainer.setBackground(UI_color.FOG);
+        buttonsContainer.setBorder(BorderFactory.createMatteBorder(UI_size.APP_BORDER_THICKNESS, 0, 0, 0, UI_color.BLACK));
+
+        CustomEvent customEvent = () -> inputField.setText("");
+        CustomButton clearKeywordsButton = new CustomButton(UI_locale.CLEAR_KEYWORDS, customEvent);
+
+        buttonsContainer.add(clearKeywordsButton);
+
+        return buttonsContainer;
+    }
+
 }

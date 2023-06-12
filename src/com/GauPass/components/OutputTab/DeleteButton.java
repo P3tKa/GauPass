@@ -19,11 +19,14 @@ public class DeleteButton extends JButton {
     private static final int ICON_WIDTH = 35;
     private static final int ICON_HEIGHT = 40;
 
+    private static final String MAIN_ICON_PATH = UI_icon_path.DELETE_ICON;
+    private static final String HOVER_ICON_PATH = UI_icon_path.DELETE_ICON_HOVER;
+
     public DeleteButton(ScrollableOutputArea scrollableOutputArea, JPanel passwordPanel) {
 
-        ImageIcon mainIcon = new IconSizeChanger().ChangeIconSize(new ImageIcon(UI_icon_path.DELETE_ICON),
+        ImageIcon mainIcon = new IconSizeChanger().ChangeIconSize(new ImageIcon(MAIN_ICON_PATH),
                  ICON_WIDTH, ICON_HEIGHT);
-        ImageIcon onHover = new IconSizeChanger().ChangeIconSize(new ImageIcon(UI_icon_path.DELETE_ICON_HOVER),
+        ImageIcon onHover = new IconSizeChanger().ChangeIconSize(new ImageIcon(HOVER_ICON_PATH),
                  ICON_WIDTH, ICON_HEIGHT);
 
         setIcon(mainIcon);

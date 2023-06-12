@@ -17,7 +17,7 @@ public class TitleBar {
 
 
     public JPanel createTitleBar(JFrame frame) {
-        JPanel titleBar = new JPanel();
+        JPanel titleBar = new JPanel(new BorderLayout());
         titleBar.setPreferredSize(new Dimension(frame.getWidth(), TITLE_BAR_WIDTH));
         titleBar.setBackground(UI_color.DEEP_LILAC);
         titleBar.setBorder(BorderFactory.createMatteBorder(0, 0, UI_size.APP_BORDER_THICKNESS, 0, UI_color.BLACK));
@@ -38,8 +38,6 @@ public class TitleBar {
         buttonPanel.add(new MinimizeButton(frame));
         buttonPanel.add(new CloseButton(frame));
 
-
-        titleBar.setLayout(new BorderLayout());
         titleBar.add(buttonPanel, BorderLayout.EAST);
     }
 
