@@ -1,19 +1,17 @@
 package com.GauPass.components.SettingsTab;
 
 import com.GauPass.constants.UI_color;
+import com.GauPass.constants.UI_font_path;
 import com.GauPass.constants.UI_icon_path;
-import com.GauPass.constants.UI_size;
+import com.GauPass.utils.BaseInteractivePanel;
+import com.GauPass.utils.ChangeCursorOnHover;
 import com.GauPass.utils.LoadBackgroundImage;
-import com.GauPass.utils.LoadFont;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
-public class SettingsCheckbox extends JPanel {
+public class SettingsCheckbox extends BaseInteractivePanel {
 
     private static HashMap<String, SettingsCheckbox> checkboxMap = new HashMap<>();
 
@@ -23,76 +21,42 @@ public class SettingsCheckbox extends JPanel {
     private static final String SELECTED_DEFAULT = UI_icon_path.CHECKBOX_SELECTED_DEFAULT;
     private static final String SELECTED_HOVER = UI_icon_path.CHECKBOX_SELECTED_HOVER;
 
-    private final Color textColor = UI_color.BLACK;
-    private final float FONT_SIZE = 15f;
-    private final int HEIGHT = 30;
+    private final static Color TEXT_COLOR = UI_color.BLACK;
+    private final static Color CHECKED_COLOR = UI_color.ELECTRIC_BLUE;
+    private final static Color CLICK_COLOR = UI_color.ELECTRIC_BLUE;
 
-    private BufferedImage defaultImage;
-    private BufferedImage hoverImage;
-    private BufferedImage onClickImage;
-    private BufferedImage selectedDefaultImage;
-    private BufferedImage selectedHoverImage;
+    private final static float FONT_SIZE = 15f;
+    private final static String FONT_PATH = UI_font_path.RUSSOONE_REGULAR;
 
-    private boolean mousePressed;
-    private boolean isHovered;
+    private final static int HEIGHT = 30;
+
+    private static BufferedImage selectedDefaultImage;
+    private static BufferedImage selectedHoverImage;
+    
     private boolean isChecked;
 
-    private JLabel label;
-    private String text;
-    private String fontPath;
-
-    public SettingsCheckbox(String text, String fontPath, String id) {
-        this.text = text;
-        this.fontPath = fontPath;
-        this.isHovered = false;
-        this.mousePressed = false;
-        this.isChecked = false;
-
-        setLayout(new GridBagLayout());
-        setBorder(BorderFactory.createLineBorder(UI_color.PALATINATE_PURPLE, UI_size.APP_BORDER_THICKNESS));
-        setPreferredSize(new Dimension(getPreferredSize().width, HEIGHT));
+    public SettingsCheckbox(String text, String id) {
+        super(text, FONT_PATH, FONT_SIZE, HEIGHT);
 
         loadImages();
-        addTextLabel();
-        addMouseEvents();
+        new ChangeCursorOnHover(this);
 
         checkboxMap.put(id, this);
     }
 
-    private void addMouseEvents() {
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                isHovered = true;
-                repaint(); 
-            }
+    @Override
+    protected void onMousePressed() {
+        textLabel.setForeground(CLICK_COLOR);
+    }
 
-            @Override
-            public void mouseExited(MouseEvent e) {
-                isHovered = false;
-                repaint(); 
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                mousePressed = true;
-                label.setForeground(UI_color.WHITE);
-                repaint(); 
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                mousePressed = false;
-                if(!isChecked) {
-                    label.setForeground(UI_color.ELECTRIC_BLUE);
-                } else {
-                    label.setForeground(UI_color.BLACK);
-                }
-                setChecked(!isChecked);
-                
-                repaint(); 
-            }
-        });
+    @Override
+    protected void onMouseReleased() {
+        if(!isChecked) {
+            textLabel.setForeground(CHECKED_COLOR);
+        } else {
+            textLabel.setForeground(TEXT_COLOR);
+        }
+        setChecked(!isChecked);
     }
 
     public void setChecked(boolean checked) {
@@ -111,41 +75,20 @@ public class SettingsCheckbox extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        if(isChecked && mousePressed && onClickImage  != null) {
-            g.drawImage(onClickImage, 0, 0, getWidth(), getHeight(), null);
-        } else if(isChecked && isHovered && selectedHoverImage != null) {
-            g.drawImage(selectedHoverImage, 0, 0, getWidth(), getHeight(), null);
-        } else if(isChecked && selectedDefaultImage != null) {
-            g.drawImage(selectedDefaultImage, 0, 0, getWidth(), getHeight(), null);
-        } else if (mousePressed && onClickImage != null) {
-            g.drawImage(onClickImage, 0, 0, getWidth(), getHeight(), null);
-        } else if (isHovered) {
-            g.drawImage(hoverImage, 0, 0, getWidth(), getHeight(), null);
-        } else {
-            g.drawImage(defaultImage, 0, 0, getWidth(), getHeight(), null);
+        if(isChecked) {
+            if(isHovered && selectedHoverImage != null) {
+                g.drawImage(selectedHoverImage, 0, 0, getWidth(), getHeight(), null);
+            } else {
+                g.drawImage(selectedDefaultImage, 0, 0, getWidth(), getHeight(), null);
+            }
         }
     }
 
-    private void addTextLabel() {
-        label = new JLabel(text);
-        new LoadFont(label, fontPath, FONT_SIZE);
-        label.setForeground(textColor);
-        add(label);
-
-        GridBagConstraints c = new GridBagConstraints();
-        c.anchor = GridBagConstraints.CENTER;
-    
-        add(label, c);
-    }
-
-    private void loadImages() {
+    protected void loadImages() {
         defaultImage = new LoadBackgroundImage().loadImage(UNSELECTED_DEFAULT);
         hoverImage = new LoadBackgroundImage().loadImage(UNSELECTED_HOVER);
         onClickImage = new LoadBackgroundImage().loadImage(ONCLICK);
-
         selectedDefaultImage = new LoadBackgroundImage().loadImage(SELECTED_DEFAULT);
         selectedHoverImage = new LoadBackgroundImage().loadImage(SELECTED_HOVER);
     }
-
-
 }

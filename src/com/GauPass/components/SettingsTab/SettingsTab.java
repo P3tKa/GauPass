@@ -83,7 +83,7 @@ public class SettingsTab {
         for (int i = 0; i < data.length; ++i) {
             c.gridy = i;
 
-            checkboxField.add(new SettingsCheckbox(data[i], UI_font_path.RUSSOONE_REGULAR, data[i]),c);
+            checkboxField.add(new SettingsCheckbox(data[i], data[i]), c);
         }
 
         return checkboxField;
