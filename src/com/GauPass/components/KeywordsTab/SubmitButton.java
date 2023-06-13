@@ -26,7 +26,8 @@ public class SubmitButton {
         JButton button = new RoundedButton(UI_locale.SUBMIT_BUTTON_TEXT, BUTTON_ARC_WIDTH, BUTTON_ARC_HEIGHT,
                 UI_color.VENETIAN_RED);
         button.setBackground(UI_color.AMARANTH);
-        new LoadFont(button, UI_font_path.RUSSOONE_REGULAR, BUTTON_FONT_SIZE);
+        button.setForeground(UI_color.BLACK);
+        LoadFont.setFont(button, UI_font_path.RUSSOONE_REGULAR, BUTTON_FONT_SIZE);
         new ChangeForegroundOnPress(button, UI_color.WHITE);
         new ChangeCursorOnHover(button);
         new ChangeBackgroundOnHover(button, UI_color.RED);

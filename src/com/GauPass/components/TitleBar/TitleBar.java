@@ -15,7 +15,6 @@ public class TitleBar {
     private final int TITLE_PADDING = 10;
     private final float TITLE_SIZE = 50f;
 
-
     public JPanel createTitleBar(JFrame frame) {
         JPanel titleBar = new JPanel(new BorderLayout());
         titleBar.setPreferredSize(new Dimension(frame.getWidth(), TITLE_BAR_WIDTH));
@@ -58,7 +57,8 @@ public class TitleBar {
 
     private void addTitleLabel(JPanel titleBar) {
         JLabel titleLabel = new JLabel(UI_locale.TITLE_BAR_HEADER);
-        new LoadFont(titleLabel, UI_font_path.RUSSOONE_REGULAR, TITLE_SIZE);
+        titleLabel.setForeground(UI_color.BLACK);
+        LoadFont.setFont(titleLabel, UI_font_path.RUSSOONE_REGULAR, TITLE_SIZE);
         titleLabel.setBorder(BorderFactory.createEmptyBorder(0, TITLE_PADDING, 0, 0));
 
         titleBar.add(titleLabel);

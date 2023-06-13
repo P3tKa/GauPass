@@ -115,9 +115,11 @@ public class SettingsTab {
         lengthTextContainer.setBackground(UI_color.FOG);
 
         JLabel length = new JLabel(UI_locale.SLIDER_CURRENT_LENGTH_TEXT);
-        new LoadFont(length, UI_font_path.RUSSOONE_REGULAR, CURRENT_LENGTH_LABEL_TEXT_SIZE);
+        length.setForeground(UI_color.BLACK);
+        LoadFont.setFont(length, UI_font_path.RUSSOONE_REGULAR, CURRENT_LENGTH_LABEL_TEXT_SIZE);
 
-        new LoadFont(lengthField, UI_font_path.RUSSOONE_REGULAR, CURRENT_LENGTH_LABEL_TEXT_SIZE);
+        LoadFont.setFont(lengthField, UI_font_path.RUSSOONE_REGULAR, CURRENT_LENGTH_LABEL_TEXT_SIZE);
+        lengthField.setForeground(UI_color.BLACK);
         lengthField.setBackground(UI_color.ELECTRIC_BLUE);
         lengthField.setBorder(new CompoundBorder(new LineBorder(UI_color.BLACK, 2), new EmptyBorder(0, 5, 0, 5)));
         lengthField.setOpaque(true);
@@ -130,7 +132,8 @@ public class SettingsTab {
 
     public JLabel createSliderLabelField() {
         JLabel labelField = new JLabel(UI_locale.SLIDER_PANEL_LABEL);
-        new LoadFont(labelField, UI_font_path.RUSSOONE_REGULAR, SLIDER_LABEL_TEXT_SIZE);
+        labelField.setForeground(UI_color.BLACK);
+        LoadFont.setFont(labelField, UI_font_path.RUSSOONE_REGULAR, SLIDER_LABEL_TEXT_SIZE);
 
         return labelField;
     }

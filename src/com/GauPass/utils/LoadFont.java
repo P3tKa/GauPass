@@ -5,23 +5,29 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoadFont {
-    private Font customFont = null;
-    
-    public LoadFont(Component comp, String fontPath, float fontSize) {
+    private static Map<String, Font> fontMap = new HashMap<>();
 
-        try {
-            customFont = Font.createFont(Font.TRUETYPE_FONT, new File(fontPath)).deriveFont(fontSize);
-        } catch (IOException | FontFormatException e) {
-            e.printStackTrace();
+    public static void loadFont(String fontPath) {
+        if (!fontMap.containsKey(fontPath)) {
+            try {
+                Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File(fontPath));
+                fontMap.put(fontPath, customFont);
+            } catch (IOException | FontFormatException e) {
+                e.printStackTrace();
+            }
         }
+    }
 
-        if (customFont != null) {
-            comp.setFont(customFont);
+    public static void setFont(Component comp, String fontPath, float fontSize) {
+        if (fontMap.containsKey(fontPath)) {
+            Font customFont = fontMap.get(fontPath);
+            comp.setFont(customFont.deriveFont(fontSize));
         } else {
             comp.setFont(new Font("SansSerif", Font.BOLD, (int) fontSize));
         }
     }
-    
 }

@@ -9,6 +9,7 @@ import javax.swing.border.MatteBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
+import com.GauPass.utils.LoadFont;
 import com.GauPass.utils.ScreenSizeCalculator;
 import com.GauPass.components.KeywordsTab.KeywordsTab;
 import com.GauPass.components.OutputTab.ClipboardButton;
@@ -31,6 +32,7 @@ public class MainFrame extends JFrame {
 
         setScreenSize(UI_size.APP_WIDTH_PERCENTAGE, UI_size.APP_HEIGHT_PERCENTAGE);
         setLocationRelativeTo(null);
+        LoadFont.loadFont(UI_font_path.RUSSOONE_REGULAR);
 
         JPanel contentPane = createContentPane();
         setContentPane(contentPane);

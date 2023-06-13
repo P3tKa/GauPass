@@ -26,6 +26,8 @@ public abstract class BaseInteractivePanel extends JPanel {
     protected boolean isHovered;
 
     private final Color BORDER_COLOR = UI_color.PALATINATE_PURPLE;
+    private final Color BASE_COLOR = UI_color.BLACK;
+
     private final int BORDER_SIZE = UI_size.APP_BORDER_THICKNESS;
 
     protected JLabel textLabel = new JLabel();
@@ -72,7 +74,8 @@ public abstract class BaseInteractivePanel extends JPanel {
 
     private void addTextLabel(String text, String fontPath, float fontSize) {
         textLabel.setText(text);
-        new LoadFont(textLabel, fontPath, fontSize);
+        textLabel.setForeground(BASE_COLOR);
+        LoadFont.setFont(textLabel, fontPath, fontSize);
         add(textLabel);
 
         GridBagConstraints c = new GridBagConstraints();

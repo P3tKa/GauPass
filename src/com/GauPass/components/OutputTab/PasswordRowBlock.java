@@ -4,7 +4,6 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
@@ -18,13 +17,15 @@ public class PasswordRowBlock extends JPanel {
 
     private PasswordGenerator gen;
     private ScrollableOutputArea scrollableOutputArea;
+    private boolean borderVisible;
     
     public PasswordRowBlock(PasswordGenerator gen, ScrollableOutputArea scrollableOutputArea) {
         
         this.gen = gen;
         this.scrollableOutputArea = scrollableOutputArea;
+        this.borderVisible = true;
 
-        setBorder(new MatteBorder(0, 0, UI_size.APP_BORDER_THICKNESS, 0, UI_color.BLACK));
+        updateBorder();
         setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -71,6 +72,19 @@ public class PasswordRowBlock extends JPanel {
         outputPassword.setBorder(new EmptyBorder(0, 5, 0, 5));
 
         return outputPassword;
+    }
+
+    public void setBorderVisible(boolean visible) {
+        this.borderVisible = visible;
+        updateBorder();
+    }
+
+    private void updateBorder() {
+        if (borderVisible) {
+            setBorder(new MatteBorder(0, 0, UI_size.APP_BORDER_THICKNESS, 0, UI_color.BLACK));
+        } else {
+            setBorder(null);
+        }
     }
 
 }

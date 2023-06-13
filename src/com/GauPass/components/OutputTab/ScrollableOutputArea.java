@@ -3,7 +3,6 @@ package com.GauPass.components.OutputTab;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 
 import com.GauPass.constants.UI_color;
 import com.GauPass.constants.UI_size;
@@ -42,11 +41,23 @@ public class ScrollableOutputArea extends JPanel {
 
     public void addComponent(Component component) {
         contentPanel.add(component);
+        handleBorders();
         revalidate();
+    }
+
+    public void handleBorders() {
+        int componentCount = contentPanel.getComponentCount();
+        if (contentPanel.getComponentCount() >= 6) {
+            Component lastComponent = contentPanel.getComponent(componentCount - 1);
+            ((PasswordRowBlock) lastComponent).setBorderVisible(false);
+            Component previousComponent = contentPanel.getComponent(componentCount - 2);
+            ((PasswordRowBlock) previousComponent).setBorderVisible(true);
+        }
     }
 
     public void removeComponent(Component component) {
         contentPanel.remove(component);
+        handleBorders();
         revalidate();
     }
 
@@ -60,11 +71,11 @@ public class ScrollableOutputArea extends JPanel {
     }
 
     public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {
-        return 16; // Adjust the value according to your requirements
+        return 16; 
     }
 
     public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction) {
-        return visibleRect.height; // Adjust the value according to your requirements
+        return visibleRect.height;
     }
 
     public boolean getScrollableTracksViewportWidth() {
