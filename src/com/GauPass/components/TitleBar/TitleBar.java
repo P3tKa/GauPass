@@ -3,6 +3,7 @@ package com.GauPass.components.TitleBar;
 import javax.swing.*;
 
 import com.GauPass.constants.*;
+import com.GauPass.utils.CustomEvent;
 import com.GauPass.utils.LoadFont;
 
 import java.awt.*;
@@ -15,32 +16,49 @@ public class TitleBar {
     private final int TITLE_PADDING = 10;
     private final float TITLE_SIZE = 50f;
 
+    private JFrame frame;
+
     public JPanel createTitleBar(JFrame frame) {
+        this.frame = frame;
+
         JPanel titleBar = new JPanel(new BorderLayout());
         titleBar.setPreferredSize(new Dimension(frame.getWidth(), TITLE_BAR_WIDTH));
         titleBar.setBackground(UI_color.DEEP_LILAC);
         titleBar.setBorder(BorderFactory.createMatteBorder(0, 0, UI_size.APP_BORDER_THICKNESS, 0, UI_color.BLACK));
 
-        addTitleBarDrag(frame, titleBar);
-        addApplicationButtons(frame, titleBar);
+        addTitleBarDrag(titleBar);
+        addPanelWithButtons(titleBar);
         addTitleLabel(titleBar);
-
 
         return titleBar;
     }
 
-    private void addApplicationButtons(JFrame frame, JPanel titleBar) {
+    private void addPanelWithButtons(JPanel titleBar) {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setOpaque(false);
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
-        buttonPanel.add(new MinimizeButton(frame));
-        buttonPanel.add(new CloseButton(frame));
+        buttonPanel.add(createMinimizeButton());
+        buttonPanel.add(createCloseButton());
 
         titleBar.add(buttonPanel, BorderLayout.EAST);
     }
 
-    private void addTitleBarDrag(JFrame frame, JPanel titleBar) {
+    private JButton createMinimizeButton() {
+        CustomEvent customEvent = () -> frame.setState(JFrame.ICONIFIED);
+        MinimizeButton minimizeButton = new MinimizeButton(customEvent);
+        
+        return minimizeButton;
+    }
+
+    private JButton createCloseButton() {
+        CustomEvent customEvent = () -> frame.dispose();
+        CloseButton closeButton = new CloseButton(customEvent);
+        
+        return closeButton;
+    }
+
+    private void addTitleBarDrag(JPanel titleBar) {
         titleBar.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 mouseDownCompCoords = e.getPoint();

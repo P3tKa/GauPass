@@ -4,6 +4,7 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
@@ -12,6 +13,8 @@ import javax.swing.border.MatteBorder;
 import com.GauPass.PasswordGenerator;
 import com.GauPass.constants.UI_color;
 import com.GauPass.constants.UI_size;
+import com.GauPass.utils.CopyToClipboard;
+import com.GauPass.utils.CustomEvent;
 
 public class PasswordRowBlock extends JPanel {
 
@@ -42,10 +45,25 @@ public class PasswordRowBlock extends JPanel {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonPanel.setBackground(UI_color.MAUVE);
 
-        buttonPanel.add(new ClipboardButton(gen.getPassword()));
-        buttonPanel.add(new DeleteButton(scrollableOutputArea, this));
+        buttonPanel.add(createClipboardButton());
+        buttonPanel.add(createDeleteButton());
 
         return buttonPanel;
+    }
+
+    public JButton createClipboardButton() {
+        CopyToClipboard ctc = new CopyToClipboard(gen.getPassword());
+        CustomEvent customEvent = () -> ctc.copy();
+        ClipboardButton clipboardButton = new ClipboardButton(customEvent);
+        
+        return clipboardButton;
+    }
+
+    public JButton createDeleteButton() {
+        CustomEvent customEvent = () -> scrollableOutputArea.removeComponent(this);
+        DeleteButton deleteButton = new DeleteButton(customEvent);
+        
+        return deleteButton;
     }
 
     public JPanel createPasswordPanel() {

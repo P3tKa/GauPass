@@ -1,4 +1,4 @@
-package com.GauPass.components.KeywordsTab;
+package com.GauPass.utils;
 
 @FunctionalInterface
 public interface CustomEvent {

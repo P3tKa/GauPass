@@ -8,6 +8,7 @@ import com.GauPass.constants.UI_font_path;
 import com.GauPass.constants.UI_icon_path;
 import com.GauPass.utils.BaseInteractivePanel;
 import com.GauPass.utils.ChangeCursorOnHover;
+import com.GauPass.utils.CustomEvent;
 import com.GauPass.utils.LoadBackgroundImage;
 
 public class CustomButton extends BaseInteractivePanel  {

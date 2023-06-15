@@ -1,12 +1,8 @@
 package com.GauPass.components.KeywordsTab;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
@@ -21,6 +17,7 @@ import com.GauPass.constants.UI_color;
 import com.GauPass.constants.UI_font_path;
 import com.GauPass.constants.UI_locale;
 import com.GauPass.constants.UI_size;
+import com.GauPass.utils.CustomEvent;
 import com.GauPass.utils.LineFilter;
 import com.GauPass.utils.LoadFont;
 import com.GauPass.MainFrame;
@@ -43,8 +40,8 @@ public class KeywordsTab {
         JPanel keywordsTab = new JPanel(new GridBagLayout());
         keywordsTab.setBackground(UI_color.FOG);
 
-        JTextArea inputField = createInputField();
-        JPanel buttonContainer = createButtonContainer(inputField, mainFrame);
+        this.inputField = createInputField();
+        JPanel buttonContainer = createButtonContainer();
 
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
@@ -65,8 +62,7 @@ public class KeywordsTab {
     }
 
     private JTextArea createInputField() {
-
-        this.inputField = new JTextArea(UI_locale.KEYWORDS_DEFAULT_TEXT);
+        inputField = new JTextArea(UI_locale.KEYWORDS_DEFAULT_TEXT);
         inputField.setBorder(BorderFactory.createEmptyBorder(5, 5, -100, 0));
         inputField.setBackground(UI_color.FOG);
         inputField.setLineWrap(true);
@@ -85,14 +81,20 @@ public class KeywordsTab {
         return inputField;
     }
 
-    private JPanel createButtonContainer(JTextArea inputField, MainFrame mainFrame) {
+    private JPanel createButtonContainer() {
 
         JPanel buttonContainer = new JPanel(new GridBagLayout());
         buttonContainer.setBackground(UI_color.FOG);
-        JButton generateButton = new SubmitButton().createSubmitButton(buttonContainer, inputField, mainFrame);
-        buttonContainer.add(generateButton);
+        buttonContainer.add(createGenerateButton());
 
         return buttonContainer;
+    }
+
+    public JButton createGenerateButton() {
+        CustomEvent customEvent = () -> mainFrame.handleGenerateButton(inputField.getText());
+        GenerateButton generateButton = new GenerateButton(customEvent);
+        
+        return generateButton;
     }
 
     private JPanel createHorizontalButtonsPanel() {
@@ -100,12 +102,16 @@ public class KeywordsTab {
         buttonsContainer.setBackground(UI_color.FOG);
         buttonsContainer.setBorder(BorderFactory.createMatteBorder(UI_size.APP_BORDER_THICKNESS, 0, 0, 0, UI_color.BLACK));
 
+        buttonsContainer.add(createClearButton());
+
+        return buttonsContainer;
+    }
+
+    public CustomButton createClearButton() {
         CustomEvent customEvent = () -> inputField.setText("");
         CustomButton clearKeywordsButton = new CustomButton(UI_locale.CLEAR_KEYWORDS, customEvent);
 
-        buttonsContainer.add(clearKeywordsButton);
-
-        return buttonsContainer;
+        return clearKeywordsButton;
     }
 
 }
