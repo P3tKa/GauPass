@@ -92,8 +92,8 @@ public class MainFrame extends JFrame {
         int value = settingsTabObject.getSliderValue();
         System.out.println(value);
 
-        PasswordGenerator gen = new PasswordGenerator();
-        gen.checkIfKeywordsUsed(Keywords, value);
+        PasswordGenerator gen = new PasswordGenerator(Keywords, value);
+        //gen.checkIfKeywordsUsed(Keywords, value);
 
         // how to check if a specific checkbox is checked
         SettingsCheckbox checkbox1 = SettingsCheckbox.getCheckboxById(UI_locale.CHECKBOX_INCLUDE_NUMBERS);
