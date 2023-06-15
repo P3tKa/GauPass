@@ -26,6 +26,7 @@ public class MainFrame extends JFrame {
 
     private ScrollableOutputArea scrollableOutputArea;
     private SettingsTab settingsTabObject;
+    private KeywordsTab keywordsTabObject;
 
     public void initialize() {
         setUndecorated(true);
@@ -70,12 +71,11 @@ public class MainFrame extends JFrame {
         settingsTabObject = new SettingsTab();
         JPanel settingsTab = settingsTabObject.createSettingsTab();
 
-        KeywordsTab keywordsTabObject = new KeywordsTab(this);
+        keywordsTabObject = new KeywordsTab(this);
         JPanel keywordsTab = keywordsTabObject.createKeywordsTab();
         keywordsTab.setBorder(BorderFactory.createMatteBorder(0, UI_size.APP_BORDER_THICKNESS, 0,
                 UI_size.APP_BORDER_THICKNESS, UI_color.BLACK));
 
-        /* Add scrollable Output Area */
         scrollableOutputArea = new ScrollableOutputArea();
 
         contentGrid.add(settingsTab);
@@ -85,23 +85,12 @@ public class MainFrame extends JFrame {
         return contentGrid;
     }
 
-    public void handleGenerateButton(String Keywords) {
-        // Handle the button press event in MainFrame
-        System.out.println(Keywords);
+    public void handleGenerateButton(String keywords) {
+        int length = settingsTabObject.getSliderValue();
 
-        int value = settingsTabObject.getSliderValue();
-        System.out.println(value);
+        PasswordGenerator gen = new PasswordGenerator(keywords, length);
 
-        PasswordGenerator gen = new PasswordGenerator();
-        gen.checkIfKeywordsUsed(Keywords, value);
-
-        // how to check if a specific checkbox is checked
-        SettingsCheckbox checkbox1 = SettingsCheckbox.getCheckboxById(UI_locale.CHECKBOX_INCLUDE_NUMBERS);
-        SettingsCheckbox checkbox2 = SettingsCheckbox.getCheckboxById(UI_locale.CHECKBOX_INCLUDE_SPEC_CHAR);
-        SettingsCheckbox checkbox3 = SettingsCheckbox.getCheckboxById(UI_locale.CHECKBOX_INCLUDE_CAP_LETTERS);
-        System.out.println("checkbox 1: " + checkbox1.isChecked());
-        System.out.println("checkbox 2: " + checkbox2.isChecked());
-        System.out.println("checkbox 3: " + checkbox3.isChecked());
+        keywordsTabObject.restoreDefaultText();
 
         PasswordRowBlock passwordBlock = new PasswordRowBlock(gen, scrollableOutputArea);
         scrollableOutputArea.addComponent(passwordBlock);
