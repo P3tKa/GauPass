@@ -15,7 +15,7 @@ public class ClipboardButton extends BaseButton {
     private static final String DEFAULT_ICON_PATH = UI_icon_path.CLIPBOARD_ICON;
     private static final String HOVER_ICON_PATH = UI_icon_path.CLIPBOARD_ICON_HOVER;
 
-    public ClipboardButton(CustomEvent customEvent) {
+    public ClipboardButton(CustomEvent customEvent, CustomEvent customEvent2) {
         super(DEFAULT_ICON_PATH, HOVER_ICON_PATH, ICON_WIDTH, ICON_HEIGHT);
         
         setContentAreaFilled(false);
@@ -25,6 +25,7 @@ public class ClipboardButton extends BaseButton {
         addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 customEvent.perform();
+                customEvent2.perform();
             }
         });
     }

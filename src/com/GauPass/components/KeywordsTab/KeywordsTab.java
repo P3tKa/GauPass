@@ -74,11 +74,17 @@ public class KeywordsTab {
             public void focusGained(FocusEvent e) {
                 JTextArea source = (JTextArea) e.getComponent();
                 source.setText("");
-                source.removeFocusListener(this);
             }
         });
 
         return inputField;
+    }
+
+    public void restoreDefaultText() {
+        if (inputField.getText().trim().isEmpty()) {
+            inputField.setText(UI_locale.KEYWORDS_DEFAULT_TEXT);
+            mainFrame.requestFocusInWindow();
+        }
     }
 
     private JPanel createButtonContainer() {
@@ -93,7 +99,7 @@ public class KeywordsTab {
     public JButton createGenerateButton() {
         CustomEvent customEvent = () -> mainFrame.handleGenerateButton(inputField.getText());
         GenerateButton generateButton = new GenerateButton(customEvent);
-        
+    
         return generateButton;
     }
 

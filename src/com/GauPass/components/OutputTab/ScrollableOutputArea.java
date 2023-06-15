@@ -8,11 +8,14 @@ import com.GauPass.constants.UI_color;
 import com.GauPass.constants.UI_size;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ScrollableOutputArea extends JPanel {
 
     private JScrollPane scrollPane;
     private JPanel contentPanel;
+    private List<PasswordRowBlock> blockArray = new ArrayList<>();
 
     public ScrollableOutputArea() {
         setLayout(new BorderLayout());
@@ -40,28 +43,24 @@ public class ScrollableOutputArea extends JPanel {
     }
 
     public void addComponent(Component component) {
+        blockArray.add((PasswordRowBlock) component);
         contentPanel.add(component);
-        handleBorders();
         revalidate();
     }
 
-    public void handleBorders() {
-        int componentCount = contentPanel.getComponentCount();
-        if (contentPanel.getComponentCount() >= 6) {
-            Component lastComponent = contentPanel.getComponent(componentCount - 1);
-            ((PasswordRowBlock) lastComponent).setBorderVisible(false);
-            Component previousComponent = contentPanel.getComponent(componentCount - 2);
-            ((PasswordRowBlock) previousComponent).setBorderVisible(true);
-        }
-    }
 
     public void removeComponent(Component component) {
+        blockArray.remove((PasswordRowBlock) component);
         contentPanel.remove(component);
-        handleBorders();
         revalidate();
     }
 
     public void removeAllComponents() {
+        for (PasswordRowBlock block : blockArray) {
+            block.resetColoredBlock();
+        }
+        blockArray.clear();
+        
         contentPanel.removeAll();
         revalidate();
     }
