@@ -16,6 +16,9 @@ public class ScrollableOutputArea extends JPanel {
     private JScrollPane scrollPane;
     private JPanel contentPanel;
     private List<PasswordRowBlock> blockArray = new ArrayList<>();
+    private JScrollBar verticalScrollbar;
+
+    private final static int SCROLL_INC = 25;
 
     public ScrollableOutputArea() {
         setLayout(new BorderLayout());
@@ -32,27 +35,31 @@ public class ScrollableOutputArea extends JPanel {
         scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        JScrollBar vertiScrollBar = scrollPane.getVerticalScrollBar();
-        vertiScrollBar.setUI(new CustomScrollBarUI());
+        verticalScrollbar = scrollPane.getVerticalScrollBar();
+        verticalScrollbar.setUI(new CustomScrollBarUI());
+        setScrollableUnitIncrement(SCROLL_INC);
         Border matteBorder = BorderFactory.createMatteBorder(0, UI_size.APP_BORDER_THICKNESS,
                 0, 0, UI_color.BLACK);
         Border colorBorder = BorderFactory.createLineBorder(UI_color.MAUVE, 1);
         Border compoundBorder = BorderFactory.createCompoundBorder(matteBorder, colorBorder);
-        vertiScrollBar.setBorder(compoundBorder);
+        verticalScrollbar.setBorder(compoundBorder);
         add(scrollPane, BorderLayout.CENTER);
     }
 
     public void addComponent(Component component) {
         blockArray.add((PasswordRowBlock) component);
         contentPanel.add(component);
-        revalidate();
+        contentPanel.validate();
+        repaint();
+        JScrollBar verticalBar = scrollPane.getVerticalScrollBar();
+        verticalBar.setValue(verticalBar.getMaximum());
     }
-
 
     public void removeComponent(Component component) {
         blockArray.remove((PasswordRowBlock) component);
         contentPanel.remove(component);
         revalidate();
+        repaint();
     }
 
     public void removeAllComponents() {
@@ -63,25 +70,23 @@ public class ScrollableOutputArea extends JPanel {
         
         contentPanel.removeAll();
         revalidate();
+        repaint();
     }
 
-    public Dimension getPreferredScrollableViewportSize() {
-        return getPreferredSize();
+
+    // public Dimension getPreferredScrollableViewportSize() {
+    //     return getPreferredSize();
+    // }
+
+    private void setScrollableUnitIncrement(int value) {
+        verticalScrollbar.setUnitIncrement(value);
     }
 
-    public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {
-        return 16; 
-    }
+    // public boolean getScrollableTracksViewportWidth() {
+    //     return true;
+    // }
 
-    public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction) {
-        return visibleRect.height;
-    }
-
-    public boolean getScrollableTracksViewportWidth() {
-        return true;
-    }
-
-    public boolean getScrollableTracksViewportHeight() {
-        return false;
-    }
+    // public boolean getScrollableTracksViewportHeight() {
+    //     return false;
+    // }
 }
