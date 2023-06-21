@@ -6,10 +6,10 @@ Secure password generator written in Java
 
 ##### Password generation
 
-&emsp;☒ Generate password of any length <br >
-&emsp;☒ Toggle to use special characters <br />
+&emsp;☒ Toggle to use upper case letters <br />
 &emsp;☒ Toggle to use Numbers <br />
-&emsp;☒ Set preferred password length <br />
+&emsp;☒ Toggle to use special characters <br />
+&emsp;☒ Generate password of any length <br >
 &emsp;☒ Quick copy to clipboard <br />
 &emsp;☐ TBA <br />
 
