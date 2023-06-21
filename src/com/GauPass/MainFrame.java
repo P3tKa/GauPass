@@ -1,23 +1,14 @@
 package com.GauPass;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.border.MatteBorder;
-
 import java.awt.*;
 import java.util.ArrayList;
 
 import com.GauPass.utils.LoadFont;
 import com.GauPass.utils.ScreenSizeCalculator;
 import com.GauPass.components.KeywordsTab.KeywordsTab;
-import com.GauPass.components.OutputTab.ClipboardButton;
-import com.GauPass.components.OutputTab.DeleteButton;
 import com.GauPass.components.OutputTab.PasswordRowBlock;
 import com.GauPass.components.OutputTab.ScrollableOutputArea;
-import com.GauPass.components.SettingsTab.CheckboxData;
-import com.GauPass.components.SettingsTab.SettingsCheckbox;
 import com.GauPass.components.SettingsTab.SettingsTab;
 import com.GauPass.components.TitleBar.TitleBar;
 import com.GauPass.constants.*;
@@ -38,7 +29,6 @@ public class MainFrame extends JFrame {
         JPanel contentPane = createContentPane();
         setContentPane(contentPane);
         setVisible(true);
-        // this.pack();
     }
 
     public void setScreenSize(double widthPercentage, double heightPercentage) {
@@ -61,7 +51,6 @@ public class MainFrame extends JFrame {
 
         JPanel contentGrid = createContentGrid();
         contentPane.add(contentGrid);
-
     }
 
     private JPanel createContentGrid() {
@@ -94,5 +83,21 @@ public class MainFrame extends JFrame {
 
         PasswordRowBlock passwordBlock = new PasswordRowBlock(gen, scrollableOutputArea);
         scrollableOutputArea.addComponent(passwordBlock);
+    }
+
+    public void handleCheckStrengthButton(String keywords) {
+        keywordsTabObject.resetLabels();
+
+        if (keywords.equals(UI_locale.KEYWORDS_DEFAULT_TEXT) || keywords.equals("")) {
+            keywordsTabObject.showLabel(UI_locale.ERROR_EMPTY_FIELD);
+            return;
+        }
+        PasswordStrengthChecker passwordStrengthChecker = new PasswordStrengthChecker();
+        ArrayList<String> PasswordWeaknesses = new ArrayList<String>();
+        PasswordWeaknesses = passwordStrengthChecker.checkStrength(keywords);
+        for (String weakness : PasswordWeaknesses) {
+            keywordsTabObject.showLabel(weakness);
+        }
+        keywordsTabObject.showPasswordStrength(passwordStrengthChecker.getPasswordScore());
     }
 }

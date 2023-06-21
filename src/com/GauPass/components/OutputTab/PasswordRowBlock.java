@@ -1,6 +1,5 @@
 package com.GauPass.components.OutputTab;
 
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -27,7 +26,7 @@ public class PasswordRowBlock extends JPanel {
     private static PasswordRowBlock coloredBlock;
 
     public PasswordRowBlock(PasswordGenerator gen, ScrollableOutputArea scrollableOutputArea) {
-        
+
         this.gen = gen;
         this.scrollableOutputArea = scrollableOutputArea;
 
@@ -39,11 +38,9 @@ public class PasswordRowBlock extends JPanel {
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
 
-
         add(createPasswordPanel(), gbc);
         add(createButtonPanel());
     }
-    
 
     public JPanel createButtonPanel() {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -60,14 +57,14 @@ public class PasswordRowBlock extends JPanel {
         CustomEvent copy = () -> ctc.copy();
         CustomEvent changeBackgroundColor = () -> changePasswordContainerColor();
         ClipboardButton clipboardButton = new ClipboardButton(copy, changeBackgroundColor);
-        
+
         return clipboardButton;
     }
 
     public JButton createDeleteButton() {
         CustomEvent customEvent = () -> scrollableOutputArea.removeComponent(this);
         DeleteButton deleteButton = new DeleteButton(customEvent);
-        
+
         return deleteButton;
     }
 
