@@ -101,9 +101,8 @@ public class PasswordGenerator {
     public String getPassword() {
         return password;
     }
-}
 
-    // public void checkIfKeywordsUsed (String keyword, int value){
+ public void checkIfKeywordsUsed (String keyword, int value){
     //     // *TODO
     //     //fix
     //         if (keyword.length() == 0 || keyword.equals(UI_locale.KEYWORDS_DEFAULT_TEXT)) {
@@ -203,4 +202,5 @@ public class PasswordGenerator {
     // } 
     
     //========================================================================================================
+
 

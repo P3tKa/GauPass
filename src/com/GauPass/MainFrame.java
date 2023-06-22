@@ -1,33 +1,39 @@
 package com.GauPass;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.border.MatteBorder;
-
 import java.awt.*;
 import java.util.ArrayList;
 
 import com.GauPass.utils.LoadFont;
 import com.GauPass.utils.ScreenSizeCalculator;
+import com.GauPass.utils.IconSizeChanger;
 import com.GauPass.components.KeywordsTab.KeywordsTab;
-import com.GauPass.components.OutputTab.ClipboardButton;
-import com.GauPass.components.OutputTab.DeleteButton;
 import com.GauPass.components.OutputTab.PasswordRowBlock;
 import com.GauPass.components.OutputTab.ScrollableOutputArea;
-import com.GauPass.components.SettingsTab.CheckboxData;
-import com.GauPass.components.SettingsTab.SettingsCheckbox;
 import com.GauPass.components.SettingsTab.SettingsTab;
 import com.GauPass.components.TitleBar.TitleBar;
 import com.GauPass.constants.*;
+
 
 public class MainFrame extends JFrame {
 
     private ScrollableOutputArea scrollableOutputArea;
     private SettingsTab settingsTabObject;
+    private KeywordsTab keywordsTabObject;
 
     public void initialize() {
+        // Set the title of the frame
+        setTitle("GauPass - Password Manager");
+
+        // Load the icon image
+        ImageIcon appIcon = new ImageIcon(getClass().getResource(UI_icon_path.APP_ICON));
+
+        /* Resize the icons if necessary */
+        appIcon = new IconSizeChanger().ChangeIconSize(appIcon, 256, 256);
+
+        // Set the icon image for the frame
+        setIconImage(appIcon.getImage());
+
         setUndecorated(true);
 
         setScreenSize(UI_size.APP_WIDTH_PERCENTAGE, UI_size.APP_HEIGHT_PERCENTAGE);
@@ -37,7 +43,6 @@ public class MainFrame extends JFrame {
         JPanel contentPane = createContentPane();
         setContentPane(contentPane);
         setVisible(true);
-        // this.pack();
     }
 
     public void setScreenSize(double widthPercentage, double heightPercentage) {
@@ -60,7 +65,6 @@ public class MainFrame extends JFrame {
 
         JPanel contentGrid = createContentGrid();
         contentPane.add(contentGrid);
-
     }
 
     private JPanel createContentGrid() {
@@ -70,13 +74,13 @@ public class MainFrame extends JFrame {
         settingsTabObject = new SettingsTab();
         JPanel settingsTab = settingsTabObject.createSettingsTab();
 
-        KeywordsTab keywordsTabObject = new KeywordsTab(this);
+        scrollableOutputArea = new ScrollableOutputArea();
+
+        keywordsTabObject = new KeywordsTab(this, scrollableOutputArea);
         JPanel keywordsTab = keywordsTabObject.createKeywordsTab();
         keywordsTab.setBorder(BorderFactory.createMatteBorder(0, UI_size.APP_BORDER_THICKNESS, 0,
                 UI_size.APP_BORDER_THICKNESS, UI_color.BLACK));
 
-        /* Add scrollable Output Area */
-        scrollableOutputArea = new ScrollableOutputArea();
 
         contentGrid.add(settingsTab);
         contentGrid.add(keywordsTab);
@@ -85,25 +89,30 @@ public class MainFrame extends JFrame {
         return contentGrid;
     }
 
-    public void handleGenerateButton(String Keywords) {
-        // Handle the button press event in MainFrame
-        System.out.println(Keywords);
+    public void handleGenerateButton(String keywords) {
+        int length = settingsTabObject.getSliderValue();
 
-        int value = settingsTabObject.getSliderValue();
-        System.out.println(value);
+        PasswordGenerator gen = new PasswordGenerator(keywords, length);
 
-        PasswordGenerator gen = new PasswordGenerator(Keywords, value);
-        //gen.checkIfKeywordsUsed(Keywords, value);
-
-        // how to check if a specific checkbox is checked
-        SettingsCheckbox checkbox1 = SettingsCheckbox.getCheckboxById(UI_locale.CHECKBOX_INCLUDE_NUMBERS);
-        SettingsCheckbox checkbox2 = SettingsCheckbox.getCheckboxById(UI_locale.CHECKBOX_INCLUDE_SPEC_CHAR);
-        SettingsCheckbox checkbox3 = SettingsCheckbox.getCheckboxById(UI_locale.CHECKBOX_INCLUDE_CAP_LETTERS);
-        System.out.println("checkbox 1: " + checkbox1.isChecked());
-        System.out.println("checkbox 2: " + checkbox2.isChecked());
-        System.out.println("checkbox 3: " + checkbox3.isChecked());
+        keywordsTabObject.restoreDefaultText();
 
         PasswordRowBlock passwordBlock = new PasswordRowBlock(gen, scrollableOutputArea);
         scrollableOutputArea.addComponent(passwordBlock);
+    }
+
+    public void handleCheckStrengthButton(String keywords) {
+        keywordsTabObject.resetLabels();
+
+        if (keywords.equals(UI_locale.KEYWORDS_DEFAULT_TEXT) || keywords.equals("")) {
+            keywordsTabObject.showLabel(UI_locale.ERROR_EMPTY_FIELD);
+            return;
+        }
+        PasswordStrengthChecker passwordStrengthChecker = new PasswordStrengthChecker();
+        ArrayList<String> PasswordWeaknesses = new ArrayList<String>();
+        PasswordWeaknesses = passwordStrengthChecker.checkStrength(keywords);
+        for (String weakness : PasswordWeaknesses) {
+            keywordsTabObject.showLabel(weakness);
+        }
+        keywordsTabObject.showPasswordStrength(passwordStrengthChecker.getPasswordScore());
     }
 }

@@ -20,22 +20,23 @@ public class PasswordRowBlock extends JPanel {
 
     private PasswordGenerator gen;
     private ScrollableOutputArea scrollableOutputArea;
-    private boolean borderVisible;
-    
+    private JPanel passwordContainer;
+    private JTextArea outputPassword;
+
+    private static PasswordRowBlock coloredBlock;
+
     public PasswordRowBlock(PasswordGenerator gen, ScrollableOutputArea scrollableOutputArea) {
-        
+
         this.gen = gen;
         this.scrollableOutputArea = scrollableOutputArea;
-        this.borderVisible = true;
 
-        updateBorder();
+        setBorder(new MatteBorder(0, 0, UI_size.APP_BORDER_THICKNESS, 0, UI_color.BLACK));
         setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-
 
         add(createPasswordPanel(), gbc);
         add(createButtonPanel());
@@ -53,21 +54,24 @@ public class PasswordRowBlock extends JPanel {
 
     public JButton createClipboardButton() {
         CopyToClipboard ctc = new CopyToClipboard(gen.getPassword());
-        CustomEvent customEvent = () -> ctc.copy();
+        CustomEvent customEvent = () ->  {
+            ctc.copy();
+            changePasswordContainerColor();
+        };
         ClipboardButton clipboardButton = new ClipboardButton(customEvent);
-        
+
         return clipboardButton;
     }
 
     public JButton createDeleteButton() {
         CustomEvent customEvent = () -> scrollableOutputArea.removeComponent(this);
         DeleteButton deleteButton = new DeleteButton(customEvent);
-        
+
         return deleteButton;
     }
 
     public JPanel createPasswordPanel() {
-        JPanel passwordContainer = new JPanel(new GridBagLayout());
+        passwordContainer = new JPanel(new GridBagLayout());
         passwordContainer.setBackground(UI_color.MAUVE);
         passwordContainer.setBorder(new MatteBorder(0, 0, 0, UI_size.APP_BORDER_THICKNESS, UI_color.BLACK));
 
@@ -81,8 +85,28 @@ public class PasswordRowBlock extends JPanel {
         return passwordContainer;
     }
 
+    public void changePasswordContainerColor() {
+        if (coloredBlock != null) {
+            coloredBlock.resetPasswordContainerColor();
+        }
+        passwordContainer.setBackground(UI_color.ELECTRIC_BLUE);
+        outputPassword.setBackground(UI_color.ELECTRIC_BLUE);
+        coloredBlock = this;
+    }
+
+    public void resetPasswordContainerColor() {
+        passwordContainer.setBackground(UI_color.MAUVE);
+        outputPassword.setBackground(UI_color.MAUVE);
+    }
+
+    public void resetColoredBlock() {
+        if (this == coloredBlock) {
+            coloredBlock = null;
+        }
+    }
+
     public JTextArea createOutputPassword() {
-        JTextArea outputPassword = new JTextArea(gen.getPassword());
+        outputPassword = new JTextArea(gen.getPassword());
 
         outputPassword.setEditable(false);
         outputPassword.setLineWrap(true);
@@ -91,18 +115,4 @@ public class PasswordRowBlock extends JPanel {
 
         return outputPassword;
     }
-
-    public void setBorderVisible(boolean visible) {
-        this.borderVisible = visible;
-        updateBorder();
-    }
-
-    private void updateBorder() {
-        if (borderVisible) {
-            setBorder(new MatteBorder(0, 0, UI_size.APP_BORDER_THICKNESS, 0, UI_color.BLACK));
-        } else {
-            setBorder(null);
-        }
-    }
-
 }
