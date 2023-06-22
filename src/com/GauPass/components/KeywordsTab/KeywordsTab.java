@@ -1,7 +1,6 @@
 package com.GauPass.components.KeywordsTab;
 
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.FocusAdapter;
@@ -181,13 +180,12 @@ public class KeywordsTab {
         return clearAllButton;
     }
 
-
     private JPanel createStrengthPanel() {
         JPanel strengthPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         strengthPanel.setBackground(UI_color.FOG);
 
         strengthPanel.add(createPasswordStrengthBox());
-        strengthPanel.add(createCheckStrengthButton()); 
+        strengthPanel.add(createCheckStrengthButton());
 
         return strengthPanel;
     }
@@ -239,7 +237,8 @@ public class KeywordsTab {
         LoadFont.setFont(strengthNumberField, UI_font_path.RUSSOONE_REGULAR, STRENGTH_BOX_FONT_SIZE);
 
         strengthNumberField.setForeground(UI_color.BLACK);
-        strengthNumberField.setBorder(new CompoundBorder(new LineBorder(UI_color.BLACK, 2), new EmptyBorder(0, 5, 0, 5)));
+        strengthNumberField
+                .setBorder(new CompoundBorder(new LineBorder(UI_color.BLACK, 2), new EmptyBorder(0, 5, 0, 5)));
         strengthNumberField.setOpaque(true);
         strengthNumberField.setVisible(false);
 
@@ -252,7 +251,6 @@ public class KeywordsTab {
         strengthNumberField.setVisible(false);
     }
 
-
     private CustomButton createClearButton() {
         CustomEvent customEvent = () -> {
             inputField.setText("");
@@ -264,7 +262,13 @@ public class KeywordsTab {
     }
 
     private CustomButton createCheckStrengthButton() {
-        CustomEvent customEvent = () -> mainFrame.handleCheckStrengthButton(inputField.getText());
+        CustomEvent customEvent = () -> {
+            if (inputField.getText().equals(UI_locale.EASTER_EGG_SENTENCE)) {
+                mainFrame.startEasterEgg();
+            } else {
+                mainFrame.handleCheckStrengthButton(inputField.getText());
+            }
+        };
         CustomButton clearKeywordsButton = new CustomButton(UI_locale.CHECK_PASS_STRENGTH, customEvent);
 
         return clearKeywordsButton;

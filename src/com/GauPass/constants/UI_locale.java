@@ -22,4 +22,5 @@ public class UI_locale {
     public static final String ERROR_NOT_ENOUGH_LENGTH = "Too small!";
     public static final String ERROR_EMPTY_FIELD = "Input your password!";
 
+    public static final String EASTER_EGG_SENTENCE = "unix";
 }

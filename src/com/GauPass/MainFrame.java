@@ -13,7 +13,7 @@ import com.GauPass.components.OutputTab.ScrollableOutputArea;
 import com.GauPass.components.SettingsTab.SettingsTab;
 import com.GauPass.components.TitleBar.TitleBar;
 import com.GauPass.constants.*;
-
+import com.GauPass.easterEgg.SecretFrame;
 
 public class MainFrame extends JFrame {
 
@@ -81,7 +81,6 @@ public class MainFrame extends JFrame {
         keywordsTab.setBorder(BorderFactory.createMatteBorder(0, UI_size.APP_BORDER_THICKNESS, 0,
                 UI_size.APP_BORDER_THICKNESS, UI_color.BLACK));
 
-
         contentGrid.add(settingsTab);
         contentGrid.add(keywordsTab);
         contentGrid.add(scrollableOutputArea);
@@ -114,5 +113,17 @@ public class MainFrame extends JFrame {
             keywordsTabObject.showLabel(weakness);
         }
         keywordsTabObject.showPasswordStrength(passwordStrengthChecker.getPasswordScore());
+    }
+
+    public void startEasterEgg() {
+        setVisible(false);
+
+        /* Initialize secret frame */
+        SecretFrame secretFrame = new SecretFrame(this);
+        secretFrame.initialize();
+    }
+
+    public void resume() {
+        setVisible(true);
     }
 }
