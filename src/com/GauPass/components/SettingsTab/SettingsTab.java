@@ -4,10 +4,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -20,7 +18,6 @@ import com.GauPass.constants.UI_color;
 import com.GauPass.constants.UI_font_path;
 import com.GauPass.constants.UI_icon_path;
 import com.GauPass.constants.UI_locale;
-import com.GauPass.utils.IconSizeChanger;
 import com.GauPass.utils.LoadFont;
 
 public class SettingsTab {
@@ -143,9 +140,8 @@ public class SettingsTab {
         sliderPanel.setBackground(UI_color.FOG);
 
         sizeSlider = new JSlider(JSlider.HORIZONTAL, SLIDER_MIN_VALUE, SLIDER_MAX_VALUE, SLIDER_DEFAULT_VALUE);
-        ImageIcon thumbIcon = new IconSizeChanger().ChangeIconSize(new ImageIcon(SLIDER_THUMB), 20, 20);
         sizeSlider.setUI(
-                new CustomSliderUI(sizeSlider, thumbIcon, lengthField, UI_color.ELECTRIC_BLUE, UI_color.AMARANTH));
+                new CustomSliderUI(sizeSlider, SLIDER_THUMB, lengthField, UI_color.ELECTRIC_BLUE, UI_color.AMARANTH));
 
         sizeSlider.setPreferredSize(new Dimension(SLIDER_WIDTH, SLIDER_HEIGHT));
         sizeSlider.setBackground(UI_color.FOG);
