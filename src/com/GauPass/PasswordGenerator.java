@@ -1,15 +1,4 @@
 package com.GauPass;
-import java.io.StringWriter;
-import java.security.SecureRandom;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import com.GauPass.components.SettingsTab.CheckboxData;
-import com.GauPass.constants.UI_locale;
-import com.GauPass.components.SettingsTab.SettingsCheckbox;
-import java.util.*;
-
-
 
 import java.util.*;
 
@@ -17,9 +6,10 @@ import com.GauPass.components.SettingsTab.SettingsCheckbox;
 import com.GauPass.constants.UI_locale;
 
 public class PasswordGenerator {
+    private String password;
     private int length;
     private String keyword;
-    private String password;
+
     private boolean includeNumber;
     private boolean includeSpecChars;
     private boolean includeCapLetters;
@@ -28,6 +18,8 @@ public class PasswordGenerator {
     private static final String UPPERCASE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final String NUMBER_CHARS = "0123456789";
     private static final String SPECIAL_CHARS = "!@#$%^&*()";
+
+    Random rand = new Random();
 
     public PasswordGenerator(String keyword, int length) {
         this.length = length;
@@ -38,23 +30,55 @@ public class PasswordGenerator {
     }
 
     public String generate() {
-        StringBuilder passwordBuilder = new StringBuilder();
-        Random rand = new Random();
+        if (keyword.length() == 0 || keyword.equals(UI_locale.KEYWORDS_DEFAULT_TEXT)) {
+            return password = generateWithoutKeyword();
+        } else {
+            return password = generateWithKeyword();
+        }
+    }
 
-        if (includeNumber) {
+public String generateWithKeyword() {
+    if (keyword.length() > length) {
+        System.out.println("Keyword length is longer than the total password length");
+        return null;
+    } else if (keyword.length() == length) {
+        return keyword;
+    }
+
+    int lengthWithoutKeyword = length - keyword.length();
+    String passwordWithoutKeyword = randomizeString(generateCheckboxStrings(lengthWithoutKeyword));
+
+    int insertAt = rand.nextInt(lengthWithoutKeyword + 1);
+
+    password = passwordWithoutKeyword.substring(0, insertAt) + keyword
+                + passwordWithoutKeyword.substring(insertAt);
+    //return it as a 3 elemt array so you could make the keyword bold
+
+    return password;
+}
+
+
+    public String generateWithoutKeyword() {
+        return randomizeString(generateCheckboxStrings(length));
+    }
+
+    public String generateCheckboxStrings(int length) {
+        StringBuilder passwordBuilder = new StringBuilder();
+        
+        if(includeNumber) {
             int perc = rand.nextInt(41 - 20) + 20; // Get random percent between 20 and 40
             String numberString = generateRandomString(NUMBER_CHARS, length * perc / 100);
             passwordBuilder.append(numberString);
         }
 
-        if (includeSpecChars) {
-            int perc = rand.nextInt(41 - 20) + 20; // Get random percent between 20 and 40
+        if(includeSpecChars) {
+            int perc = rand.nextInt(41 - 20) + 20;
             String specialCharString = generateRandomString(SPECIAL_CHARS, length * perc / 100);
             passwordBuilder.append(specialCharString);
         }
 
-        if (includeCapLetters) {
-            int perc = rand.nextInt(41 - 20) + 20; // Get random percent between 20 and 40
+        if(includeCapLetters) {
+            int perc = rand.nextInt(41 - 20) + 20;
             String capLetterString = generateRandomString(UPPERCASE_CHARS, length * perc / 100);
             passwordBuilder.append(capLetterString);
         }
@@ -66,25 +90,21 @@ public class PasswordGenerator {
             passwordBuilder.append(lowercaseString);
         }
 
-        // If the password is longer than the required length due to integer division approximation, trim it
+        // trim it if password is longer than required length due to integer division aprox
         if (passwordBuilder.length() > length) {
             passwordBuilder.setLength(length);
         }
 
-        // Randomize the characters in the string builder
-        password = randomizeString(passwordBuilder.toString());
-
-        return password;
+        return passwordBuilder.toString();
     }
-
-    private void getCheckBoxValues() {
+    
+    public void getCheckBoxValues() {
         includeNumber = SettingsCheckbox.getCheckboxById(UI_locale.CHECKBOX_INCLUDE_NUMBERS).isChecked();
         includeSpecChars = SettingsCheckbox.getCheckboxById(UI_locale.CHECKBOX_INCLUDE_SPEC_CHAR).isChecked();
         includeCapLetters = SettingsCheckbox.getCheckboxById(UI_locale.CHECKBOX_INCLUDE_CAP_LETTERS).isChecked();
     }
 
     private String generateRandomString(String charSet, int length) {
-        Random rand = new Random();
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < length; i++) {
             sb.append(charSet.charAt(rand.nextInt(charSet.length())));
@@ -97,54 +117,25 @@ public class PasswordGenerator {
         Collections.shuffle(characters);
         return String.join("", characters);
     }
-
+        
     public String getPassword() {
         return password;
     }
+}
 
- public void checkIfKeywordsUsed (String keyword, int value){
-    //     // *TODO
-    //     //fix
-    //         if (keyword.length() == 0 || keyword.equals(UI_locale.KEYWORDS_DEFAULT_TEXT)) {
-    //             password = generateRandom(value);
-    //         } else {
-    //             password = generate(value, keyword);
-    //         }
-    //     }
-        
-    // public String getPassword (){
-    //     return password;
-    // }
-    // public void setUseNumbers(boolean useNumbers) {
-    //     this.useNumbers = useNumbers;
-    // }
 
-    // public void setUseSpecialChars(boolean useSpecialChars) {
-    //     this.useSpecialChars = useSpecialChars;
-    // }
-
-    // public String generate (int passwordLength, String word) {
-    //     SecureRandom random = new SecureRandom();
-    //         StringBuilder password = new StringBuilder();
-    //         Map<Character, List<Character>> symbolMap = createSymbolMap();
     
-    //         for (char c : word.toCharArray()) {
-    //             char lowerC = Character.toLowerCase(c);
-    //             List<Character> symbols = symbolMap.get(lowerC);
-    //             if (symbols != null && symbols.size() > 0) {
-    //                 int index = random.nextInt(symbols.size());
-    //                 password.append(symbols.get(index));
-    //             } else {
-    //                 password.append(c);
-    //             }
-    //         }
-
-    //         if (checkIfValid(word, password.toString()) == true) return password.toString(); //Validity check
-    //         else return generate(passwordLength, word);
-        
-            
-    // }
+    // public String generateGen(int passwordLength) { //Generic password generation
+    //         SecureRandom random = new SecureRandom();
+    //         String validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?@";
     
+    //         for (int i = 0; i < passwordLength; i++) {
+    //             int randomIndex = random.nextInt(validChars.length());
+    //             password += validChars.charAt(randomIndex);
+    //         }
+    //         return password;
+    // }
+
     
     // private boolean checkIfValid (String word, String newPass) //Function that will be expanded
     // {
@@ -163,7 +154,7 @@ public class PasswordGenerator {
     //         else return true;
            
     // }
-    // //The list has to be updated according to the checkboxes used. 
+
     
     // private static Map<Character, List<Character>> createSymbolMap() {
         
@@ -199,8 +190,5 @@ public class PasswordGenerator {
 
 
     //     return symbolMap;
-    // } 
-    
-    //========================================================================================================
-
-
+    // }
+// }
