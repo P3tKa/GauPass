@@ -24,6 +24,7 @@ Secure password generator written in Java
 
 ## Dependencies
 
+- Jar
 - Java
 - Java Swing
 
