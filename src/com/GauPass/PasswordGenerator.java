@@ -37,29 +37,26 @@ public class PasswordGenerator {
         }
     }
 
-public String generateWithKeyword() {
-    if (keyword.length() > length) {
-        System.out.println("Keyword length is longer than the total password length");
-        return null;
-    } else if (keyword.length() == length) {
-        return keyword;
+    public String generateWithKeyword() {
+        if (keyword.length() > length) {
+            System.out.println("Keyword length is longer than the total password length");
+            return null;
+        } else if (keyword.length() == length) {
+            return keyword;
+        }
+
+        int lengthWithoutKeyword = length - keyword.length();
+        String passwordWithoutKeyword = randomizeString(generateCheckboxStrings(lengthWithoutKeyword));
+
+        int insertAt = rand.nextInt(lengthWithoutKeyword + 1);
+
+        password = passwordWithoutKeyword.substring(0, insertAt) + keyword + passwordWithoutKeyword.substring(insertAt);
+
+        return password;
     }
 
-    int lengthWithoutKeyword = length - keyword.length();
-    String passwordWithoutKeyword = randomizeString(generateCheckboxStrings(lengthWithoutKeyword));
-
-    int insertAt = rand.nextInt(lengthWithoutKeyword + 1);
-
-    password = passwordWithoutKeyword.substring(0, insertAt) + keyword
-                + passwordWithoutKeyword.substring(insertAt);
-    //return it as a 3 elemt array so you could make the keyword bold
-
-    return password;
-}
-
-
     public String generateWithoutKeyword() {
-        return randomizeString(generateCheckboxStrings(length));
+        return generateCheckboxStrings(length);
     }
 
     public String generateCheckboxStrings(int length) {
@@ -109,13 +106,16 @@ public String generateWithKeyword() {
         for (int i = 0; i < length; i++) {
             sb.append(charSet.charAt(rand.nextInt(charSet.length())));
         }
+
         return sb.toString();
     }
 
     private String randomizeString(String input) {
         List<String> characters = Arrays.asList(input.split(""));
         Collections.shuffle(characters);
-        return String.join("", characters);
+        String password = String.join("", characters);
+
+        return password;
     }
         
     public String getPassword() {

@@ -25,7 +25,6 @@ public class ScrollableOutputArea extends JPanel {
 
         contentPanel = new JPanel();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-        contentPanel.setBackground(UI_color.MAUVE);
 
         JPanel contentPanelContainer = new JPanel(new BorderLayout());
         contentPanelContainer.setBackground(UI_color.MAUVE);
@@ -73,20 +72,7 @@ public class ScrollableOutputArea extends JPanel {
         repaint();
     }
 
-
-    // public Dimension getPreferredScrollableViewportSize() {
-    //     return getPreferredSize();
-    // }
-
     private void setScrollableUnitIncrement(int value) {
         verticalScrollbar.setUnitIncrement(value);
     }
-
-    // public boolean getScrollableTracksViewportWidth() {
-    //     return true;
-    // }
-
-    // public boolean getScrollableTracksViewportHeight() {
-    //     return false;
-    // }
 }
