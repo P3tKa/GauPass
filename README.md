@@ -29,4 +29,18 @@ Secure password generator written in Java
 
 ## Instalation
 
-    run the Main class
+Move to src directory
+
+    cd src
+
+Compile program into .class files
+
+    javac Main.java
+
+Create a Jar file using .class files and Manifest.txt
+
+    jar cfm GauPass.jar Manifest.txt ./*
+
+Run the generated Jar file
+
+    java -jar GauPass.jar

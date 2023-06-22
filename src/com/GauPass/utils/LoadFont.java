@@ -3,8 +3,11 @@ package com.GauPass.utils;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,7 +17,9 @@ public class LoadFont {
     public static void loadFont(String fontPath) {
         if (!fontMap.containsKey(fontPath)) {
             try {
-                Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File(fontPath));
+                /* Jar supported font loading */
+                InputStream is = LoadFont.class.getResourceAsStream(fontPath);
+                Font customFont = Font.createFont(Font.TRUETYPE_FONT, is);
                 fontMap.put(fontPath, customFont);
             } catch (IOException | FontFormatException e) {
                 e.printStackTrace();

@@ -143,9 +143,8 @@ public class SettingsTab {
         sliderPanel.setBackground(UI_color.FOG);
 
         sizeSlider = new JSlider(JSlider.HORIZONTAL, SLIDER_MIN_VALUE, SLIDER_MAX_VALUE, SLIDER_DEFAULT_VALUE);
-        ImageIcon thumbIcon = new IconSizeChanger().ChangeIconSize(new ImageIcon(SLIDER_THUMB), 20, 20);
         sizeSlider.setUI(
-                new CustomSliderUI(sizeSlider, thumbIcon, lengthField, UI_color.ELECTRIC_BLUE, UI_color.AMARANTH));
+                new CustomSliderUI(sizeSlider, SLIDER_THUMB, lengthField, UI_color.ELECTRIC_BLUE, UI_color.AMARANTH));
 
         sizeSlider.setPreferredSize(new Dimension(SLIDER_WIDTH, SLIDER_HEIGHT));
         sizeSlider.setBackground(UI_color.FOG);
