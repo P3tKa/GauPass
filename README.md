@@ -20,6 +20,7 @@ Secure password generator written in Java
 &emsp;☒ Check if password contains numbers <br />
 &emsp;☒ Check if password contains special characters <br />
 &emsp;☒ Check if password is enough length <br />
+&emsp;☒ Easter egg (check password "unix" strength) <br />
 &emsp;☐ TBA <br />
 
 ## Dependencies
