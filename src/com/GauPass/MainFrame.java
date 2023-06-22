@@ -6,12 +6,14 @@ import java.util.ArrayList;
 
 import com.GauPass.utils.LoadFont;
 import com.GauPass.utils.ScreenSizeCalculator;
+import com.GauPass.utils.IconSizeChanger;
 import com.GauPass.components.KeywordsTab.KeywordsTab;
 import com.GauPass.components.OutputTab.PasswordRowBlock;
 import com.GauPass.components.OutputTab.ScrollableOutputArea;
 import com.GauPass.components.SettingsTab.SettingsTab;
 import com.GauPass.components.TitleBar.TitleBar;
 import com.GauPass.constants.*;
+
 
 public class MainFrame extends JFrame {
 
@@ -20,6 +22,18 @@ public class MainFrame extends JFrame {
     private KeywordsTab keywordsTabObject;
 
     public void initialize() {
+        // Set the title of the frame
+        setTitle("GauPass - Password Manager");
+
+        // Load the icon image
+        ImageIcon appIcon = new ImageIcon(getClass().getResource(UI_icon_path.APP_ICON));
+
+        /* Resize the icons if necessary */
+        appIcon = new IconSizeChanger().ChangeIconSize(appIcon, 256, 256);
+
+        // Set the icon image for the frame
+        setIconImage(appIcon.getImage());
+
         setUndecorated(true);
 
         setScreenSize(UI_size.APP_WIDTH_PERCENTAGE, UI_size.APP_HEIGHT_PERCENTAGE);
