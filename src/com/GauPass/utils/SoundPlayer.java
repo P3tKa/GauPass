@@ -3,22 +3,26 @@ package com.GauPass.utils;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import java.io.InputStream;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
+import java.io.IOException;
+import java.net.URL;
 
 public class SoundPlayer {
     private static Clip clip;
 
     public static void playSound(String resourcePath) {
         try {
-            // Get the input stream of the resource file
-            InputStream inputStream = SoundPlayer.class.getResourceAsStream(resourcePath);
-            if (inputStream == null) {
+            // Get the URL of the resource file
+            URL resourceURL = SoundPlayer.class.getResource(resourcePath);
+            if (resourceURL == null) {
                 System.err.println("Sound resource not found: " + resourcePath);
                 return;
             }
 
-            // Create an audio input stream from the input stream
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(inputStream);
+            // Create an audio input stream from the URL
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(resourceURL);
 
             // Get a clip to play the audio
             clip = AudioSystem.getClip();
@@ -31,7 +35,7 @@ public class SoundPlayer {
 
             // Start playing the audio
             clip.start();
-        } catch (Exception e) {
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
     }
