@@ -60,12 +60,13 @@ public class MainFrame extends JFrame {
         settingsTabObject = new SettingsTab();
         JPanel settingsTab = settingsTabObject.createSettingsTab();
 
-        keywordsTabObject = new KeywordsTab(this);
+        scrollableOutputArea = new ScrollableOutputArea();
+
+        keywordsTabObject = new KeywordsTab(this, scrollableOutputArea);
         JPanel keywordsTab = keywordsTabObject.createKeywordsTab();
         keywordsTab.setBorder(BorderFactory.createMatteBorder(0, UI_size.APP_BORDER_THICKNESS, 0,
                 UI_size.APP_BORDER_THICKNESS, UI_color.BLACK));
 
-        scrollableOutputArea = new ScrollableOutputArea();
 
         contentGrid.add(settingsTab);
         contentGrid.add(keywordsTab);

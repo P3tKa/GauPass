@@ -22,6 +22,6 @@ public class BaseErrorLabel extends JLabel {
 
         setBorder(compoundBorder);
         setBackground(UI_color.AMARANTH);
-        setForeground(UI_color.WHITE);
+        setForeground(UI_color.BLACK);
     }
 }

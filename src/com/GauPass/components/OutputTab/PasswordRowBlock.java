@@ -54,9 +54,11 @@ public class PasswordRowBlock extends JPanel {
 
     public JButton createClipboardButton() {
         CopyToClipboard ctc = new CopyToClipboard(gen.getPassword());
-        CustomEvent copy = () -> ctc.copy();
-        CustomEvent changeBackgroundColor = () -> changePasswordContainerColor();
-        ClipboardButton clipboardButton = new ClipboardButton(copy, changeBackgroundColor);
+        CustomEvent customEvent = () ->  {
+            ctc.copy();
+            changePasswordContainerColor();
+        };
+        ClipboardButton clipboardButton = new ClipboardButton(customEvent);
 
         return clipboardButton;
     }

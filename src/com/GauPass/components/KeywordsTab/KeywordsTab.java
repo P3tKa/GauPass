@@ -13,6 +13,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.text.PlainDocument;
 
 import com.GauPass.constants.UI_color;
@@ -23,25 +26,31 @@ import com.GauPass.utils.CustomEvent;
 import com.GauPass.utils.LineFilter;
 import com.GauPass.utils.LoadFont;
 
-import com.GauPass.utils.BaseLabel;
 import com.GauPass.utils.BaseErrorLabel;
 import com.GauPass.MainFrame;
+import com.GauPass.components.OutputTab.ScrollableOutputArea;
 
 public class KeywordsTab {
     private final float DEFAULT_LABEL_TEXT_SIZE = 12f;
 
     private final double FIRST_ROW_SIZE = 0.32;
     private final double SECOND_ROW_SIZE = 0.03;
-    private final double THIRD_ROW_SIZE = 0.25;
-    private final double FOURTH_ROW_SIZE = 0.4;
+    private final double THIRD_ROW_SIZE = 0.03;
+    private final double FOURTH_ROW_SIZE = 0.03;
+    private final double FIFTH_ROW_SIZE = 0.4;
+
+    private final float STRENGTH_BOX_FONT_SIZE = 15f;
 
     private MainFrame mainFrame;
     private JTextArea inputField;
     private JPanel buttonsContainer, labelsContainer;
-    private JLabel[] StrengthLabel, ErrorLabels;
+    private JLabel[] ErrorLabels;
+    private JLabel strengthNumberField;
+    private ScrollableOutputArea scrollableOutputArea;
 
-    public KeywordsTab(MainFrame mainFrame) {
+    public KeywordsTab(MainFrame mainFrame, ScrollableOutputArea scrollableOutputArea) {
         this.mainFrame = mainFrame;
+        this.scrollableOutputArea = scrollableOutputArea;
     }
 
     public JPanel createKeywordsTab() {
@@ -63,11 +72,15 @@ public class KeywordsTab {
 
         c.gridy = 2;
         c.weighty = THIRD_ROW_SIZE;
-        keywordsTab.add(createHorizontalLabelspanel(), c);
+        keywordsTab.add(createStrengthPanel(), c);
+
+        c.gridy = 3;
+        c.weighty = FOURTH_ROW_SIZE;
+        keywordsTab.add(createErorrPanel(), c);
 
         c.gridwidth = 1;
-        c.weighty = FOURTH_ROW_SIZE;
-        c.gridy = 3;
+        c.weighty = FIFTH_ROW_SIZE;
+        c.gridy = 4;
         keywordsTab.add(buttonContainer, c);
         return keywordsTab;
     }
@@ -119,31 +132,67 @@ public class KeywordsTab {
     }
 
     private JPanel createHorizontalButtonsPanel() {
-        buttonsContainer = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        buttonsContainer = new JPanel();
         buttonsContainer.setBackground(UI_color.FOG);
 
-        // Create line border
         Border lineBoarder = BorderFactory.createMatteBorder(UI_size.APP_BORDER_THICKNESS, 0, 0, 0, UI_color.BLACK);
-
-        // Create an empty border
         Border emptyBorder = BorderFactory.createEmptyBorder(0, 0, 0, 0);
-
-        // Combine the empty border and dotted border
         Border compoundBorder = BorderFactory.createCompoundBorder(lineBoarder, emptyBorder);
         buttonsContainer.setBorder(compoundBorder);
 
-        StrengthLabel = createPasswordStrengthLabel();
-        for (JLabel label : StrengthLabel) {
-            buttonsContainer.add(label);
-        }
-
-        buttonsContainer.add(createCheckStrengthButton());
+        buttonsContainer.add(createModifyKeywordButton());
+        buttonsContainer.add(createGenFiveButton());
+        buttonsContainer.add(createClearAllButton());
         buttonsContainer.add(createClearButton());
 
         return buttonsContainer;
     }
 
-    private JPanel createHorizontalLabelspanel() {
+    private CustomButton createModifyKeywordButton() {
+        CustomEvent customEvent = () -> {
+            ModifyKeyword modifyKeywordObj = new ModifyKeyword(inputField.getText());
+            inputField.setText(modifyKeywordObj.modifyKeyword());
+            hidePasswordStrength();
+            resetLabels();
+        };
+        CustomButton modifyKeywordButton = new CustomButton(UI_locale.MODIFY_KEYWORD, customEvent);
+        return modifyKeywordButton;
+    }
+
+    private CustomButton createGenFiveButton() {
+        CustomEvent customEvent = () -> {
+            for (int i = 0; i < 5; i++) {
+                mainFrame.handleGenerateButton(inputField.getText());
+            }
+            hidePasswordStrength();
+            resetLabels();
+        };
+        CustomButton genFiveButton = new CustomButton("Generate 5", customEvent);
+        return genFiveButton;
+    }
+
+    private CustomButton createClearAllButton() {
+        CustomEvent customEvent = () -> {
+            scrollableOutputArea.removeAllComponents();
+            hidePasswordStrength();
+            resetLabels();
+        };
+        CustomButton clearAllButton = new CustomButton("Clear passwords", customEvent);
+        return clearAllButton;
+    }
+
+
+    private JPanel createStrengthPanel() {
+        JPanel strengthPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        strengthPanel.setBackground(UI_color.FOG);
+
+        strengthPanel.add(createPasswordStrengthBox());
+        strengthPanel.add(createCheckStrengthButton()); 
+
+        return strengthPanel;
+    }
+
+    private JPanel createErorrPanel() {
         labelsContainer = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         labelsContainer.setBackground(UI_color.FOG);
         labelsContainer
@@ -170,44 +219,39 @@ public class KeywordsTab {
     }
 
     public void showPasswordStrength(int strength) {
+        strengthNumberField.setVisible(true);
         if (strength < 35)
-            StrengthLabel[0].setForeground(UI_color.VENETIAN_RED);
+            strengthNumberField.setBackground(UI_color.VENETIAN_RED);
         else if (strength < 75)
-            StrengthLabel[0].setForeground(UI_color.ORANGE_YELLOW);
+            strengthNumberField.setBackground(UI_color.ORANGE_YELLOW);
         else
-            StrengthLabel[0].setForeground(UI_color.GREEN);
+            strengthNumberField.setBackground(UI_color.GREEN);
 
-        StrengthLabel[0].setText(Integer.toString(strength));
+        strengthNumberField.setText(Integer.toString(strength) + " / 100");
 
-        StrengthLabel[0].setVisible(true);
-        StrengthLabel[1].setVisible(true);
-        StrengthLabel[2].setVisible(true);
+    }
+
+    public JPanel createPasswordStrengthBox() {
+        JPanel passwordStrengthBox = new JPanel();
+        passwordStrengthBox.setBackground(UI_color.FOG);
+
+        strengthNumberField = new JLabel();
+        LoadFont.setFont(strengthNumberField, UI_font_path.RUSSOONE_REGULAR, STRENGTH_BOX_FONT_SIZE);
+
+        strengthNumberField.setForeground(UI_color.BLACK);
+        strengthNumberField.setBorder(new CompoundBorder(new LineBorder(UI_color.BLACK, 2), new EmptyBorder(0, 5, 0, 5)));
+        strengthNumberField.setOpaque(true);
+        strengthNumberField.setVisible(false);
+
+        passwordStrengthBox.add(strengthNumberField);
+
+        return passwordStrengthBox;
     }
 
     public void hidePasswordStrength() {
-        StrengthLabel[0].setVisible(false);
-        StrengthLabel[1].setVisible(false);
-        StrengthLabel[2].setVisible(false);
+        strengthNumberField.setVisible(false);
     }
 
-    private JLabel[] createPasswordStrengthLabel() {
-        JLabel[] StrengthLabels = new JLabel[3];
-        // Set the font size and weight
-        Font font = new Font("Arial", Font.BOLD, 22);
-
-        StrengthLabels[0] = new BaseLabel("", font);
-        StrengthLabels[0].setVisible(false);
-
-        StrengthLabels[1] = new BaseLabel("/", font);
-        StrengthLabels[1].setForeground(UI_color.PALATINATE_PURPLE);
-        StrengthLabels[1].setVisible(false);
-
-        StrengthLabels[2] = new BaseLabel("100", font);
-        StrengthLabels[2].setForeground(UI_color.DEEP_LILAC);
-        StrengthLabels[2].setVisible(false);
-
-        return StrengthLabels;
-    }
 
     private CustomButton createClearButton() {
         CustomEvent customEvent = () -> {
