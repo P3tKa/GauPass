@@ -94,7 +94,6 @@ public class MainFrame extends JFrame {
         if(keywords.equals(UI_locale.KEYWORDS_DEFAULT_TEXT)) {
             keywords = "";
         }
-        // || keyword.equals(UI_locale.KEYWORDS_DEFAULT_TEXT)
         if(keywords.length() > length) {
             keywordsTabObject.showKeywordLengthError();
         } else {

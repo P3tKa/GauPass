@@ -139,7 +139,6 @@ public class KeywordsTab {
         Border compoundBorder = BorderFactory.createCompoundBorder(lineBoarder, emptyBorder);
         buttonsContainer.setBorder(compoundBorder);
 
-        buttonsContainer.add(createModifyKeywordButton());
         buttonsContainer.add(createGenFiveButton());
         buttonsContainer.add(createClearAllButton());
         buttonsContainer.add(createClearButton());
@@ -183,11 +182,16 @@ public class KeywordsTab {
     }
 
     private JPanel createStrengthPanel() {
-        JPanel strengthPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JPanel strengthPanel = new JPanel();
         strengthPanel.setBackground(UI_color.FOG);
 
-        strengthPanel.add(createPasswordStrengthBox());
+        JPanel buttonContainer = new JPanel();
+        buttonContainer.setBackground(UI_color.FOG);
+        buttonContainer.add(createModifyKeywordButton());
+
+        strengthPanel.add(buttonContainer);
         strengthPanel.add(createCheckStrengthButton());
+        strengthPanel.add(createPasswordStrengthBox());
 
         return strengthPanel;
     }
