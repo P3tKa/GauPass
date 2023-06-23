@@ -1,6 +1,7 @@
 # GauPass
 
 Secure password generator written in Java
+![programs screenshot](screenshot.png)
 
 ## Features
 
