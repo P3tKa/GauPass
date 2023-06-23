@@ -149,8 +149,8 @@ public class KeywordsTab {
 
     private CustomButton createModifyKeywordButton() {
         CustomEvent customEvent = () -> {
-            ModifyKeyword modifyKeywordObj = new ModifyKeyword(inputField.getText());
-            inputField.setText(modifyKeywordObj.modifyKeyword());
+            ModifyKeyword modifyKeywordObj = new ModifyKeyword("");
+            inputField.setText(modifyKeywordObj.modifyKeyword(inputField.getText()));
             hidePasswordStrength();
             resetLabels();
             resetKeywordLengthError();

@@ -49,10 +49,12 @@ public class PasswordGenerator {
 
         int insertAt = rand.nextInt(lengthWithoutKeyword + 1);
 
-        password = passwordWithoutKeyword.substring(0, insertAt) + keyword + passwordWithoutKeyword.substring(insertAt);
+        password = passwordWithoutKeyword.substring(0, insertAt) + keyword
+            + passwordWithoutKeyword.substring(insertAt);
 
-        return password;
+    return password;
     }
+
 
     public String generateWithoutKeyword() {
         return randomizeString(generateCheckboxStrings(length));
@@ -62,19 +64,19 @@ public class PasswordGenerator {
         StringBuilder passwordBuilder = new StringBuilder();
         
         if(includeNumber) {
-            int perc = rand.nextInt(41 - 20) + 20; // Get random percent between 20 and 40
+            int perc = rand.nextInt(41 - 30) + 30; // Get random percent between 30 and 40
             String numberString = generateRandomString(NUMBER_CHARS, length * perc / 100);
             passwordBuilder.append(numberString);
         }
 
         if(includeSpecChars) {
-            int perc = rand.nextInt(41 - 20) + 20;
+            int perc = rand.nextInt(41 - 30) + 30;
             String specialCharString = generateRandomString(SPECIAL_CHARS, length * perc / 100);
             passwordBuilder.append(specialCharString);
         }
 
         if(includeCapLetters) {
-            int perc = rand.nextInt(41 - 20) + 20;
+            int perc = rand.nextInt(41 - 30) + 30;
             String capLetterString = generateRandomString(UPPERCASE_CHARS, length * perc / 100);
             passwordBuilder.append(capLetterString);
         }
@@ -105,16 +107,13 @@ public class PasswordGenerator {
         for (int i = 0; i < length; i++) {
             sb.append(charSet.charAt(rand.nextInt(charSet.length())));
         }
-
         return sb.toString();
     }
 
     private String randomizeString(String input) {
         List<String> characters = Arrays.asList(input.split(""));
         Collections.shuffle(characters);
-        String password = String.join("", characters);
-
-        return password;
+        return String.join("", characters);
     }
         
     public String getPassword() {
