@@ -55,7 +55,7 @@ public class PasswordGenerator {
     }
 
     public String generateWithoutKeyword() {
-        return generateCheckboxStrings(length);
+        return randomizeString(generateCheckboxStrings(length));
     }
 
     public String generateCheckboxStrings(int length) {

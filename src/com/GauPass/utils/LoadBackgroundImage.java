@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 public class LoadBackgroundImage {
 
     public BufferedImage loadImage(String imgPath) {
-        /* Jar supported font loading */
+        /* Jar supported image loading */
         InputStream is = LoadBackgroundImage.class.getResourceAsStream(imgPath);
         try {
             return ImageIO.read(is);
