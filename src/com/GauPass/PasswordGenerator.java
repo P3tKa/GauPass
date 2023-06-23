@@ -39,7 +39,6 @@ public class PasswordGenerator {
 
     public String generateWithKeyword() {
         if (keyword.length() > length) {
-            System.out.println("Keyword length is longer than the total password length");
             return null;
         } else if (keyword.length() == length) {
             return keyword;

@@ -5,7 +5,10 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 import com.GauPass.constants.UI_color;
+import com.GauPass.constants.UI_font_path;
+import com.GauPass.constants.UI_locale;
 import com.GauPass.constants.UI_size;
+import com.GauPass.utils.LoadFont;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -17,6 +20,9 @@ public class ScrollableOutputArea extends JPanel {
     private JPanel contentPanel;
     private List<PasswordRowBlock> blockArray = new ArrayList<>();
     private JScrollBar verticalScrollbar;
+    private JLabel messageLabel;
+
+    private final static float MESSAGE_LABEL_SIZE = 18f;
 
     private final static int SCROLL_INC = 25;
 
@@ -29,6 +35,8 @@ public class ScrollableOutputArea extends JPanel {
         JPanel contentPanelContainer = new JPanel(new BorderLayout());
         contentPanelContainer.setBackground(UI_color.MAUVE);
         contentPanelContainer.add(contentPanel, BorderLayout.NORTH);
+
+        contentPanelContainer.add(createMessageLabel(), BorderLayout.CENTER);
 
         scrollPane = new JScrollPane(contentPanelContainer);
         scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -52,6 +60,7 @@ public class ScrollableOutputArea extends JPanel {
         repaint();
         JScrollBar verticalBar = scrollPane.getVerticalScrollBar();
         verticalBar.setValue(verticalBar.getMaximum());
+        messageLabel.setVisible(false);
     }
 
     public void removeComponent(Component component) {
@@ -59,6 +68,9 @@ public class ScrollableOutputArea extends JPanel {
         contentPanel.remove(component);
         revalidate();
         repaint();
+        if (contentPanel.getComponentCount() == 0) {
+            messageLabel.setVisible(true);
+        }
     }
 
     public void removeAllComponents() {
@@ -70,9 +82,18 @@ public class ScrollableOutputArea extends JPanel {
         contentPanel.removeAll();
         revalidate();
         repaint();
+        messageLabel.setVisible(true);
     }
 
     private void setScrollableUnitIncrement(int value) {
         verticalScrollbar.setUnitIncrement(value);
+    }
+
+    private JLabel createMessageLabel() {
+        messageLabel = new JLabel(UI_locale.EMPTY_PASSWORDS_LABEL, JLabel.CENTER);
+        LoadFont.setFont(messageLabel, UI_font_path.RUSSOONE_REGULAR, MESSAGE_LABEL_SIZE);
+        messageLabel.setForeground(Color.BLACK);
+
+        return messageLabel;
     }
 }

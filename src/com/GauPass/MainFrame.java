@@ -22,18 +22,7 @@ public class MainFrame extends JFrame {
     private KeywordsTab keywordsTabObject;
 
     public void initialize() {
-        // Set the title of the frame
-        setTitle("GauPass - Password Manager");
-
-        // Load the icon image
-        ImageIcon appIcon = new ImageIcon(getClass().getResource(UI_icon_path.APP_ICON));
-
-        /* Resize the icons if necessary */
-        appIcon = new IconSizeChanger().ChangeIconSize(appIcon, 256, 256);
-
-        // Set the icon image for the frame
-        setIconImage(appIcon.getImage());
-
+        initializeAppearance();
         setUndecorated(true);
 
         setScreenSize(UI_size.APP_WIDTH_PERCENTAGE, UI_size.APP_HEIGHT_PERCENTAGE);
@@ -43,6 +32,13 @@ public class MainFrame extends JFrame {
         JPanel contentPane = createContentPane();
         setContentPane(contentPane);
         setVisible(true);
+    }
+
+    public void initializeAppearance() {
+        setTitle(UI_locale.APP_TITLE);
+        ImageIcon appIcon = new ImageIcon(getClass().getResource(UI_icon_path.APP_ICON));
+        appIcon = new IconSizeChanger().ChangeIconSize(appIcon, 256, 256);
+        setIconImage(appIcon.getImage());
     }
 
     public void setScreenSize(double widthPercentage, double heightPercentage) {
@@ -95,8 +91,17 @@ public class MainFrame extends JFrame {
 
         keywordsTabObject.restoreDefaultText();
 
-        PasswordRowBlock passwordBlock = new PasswordRowBlock(gen, scrollableOutputArea);
-        scrollableOutputArea.addComponent(passwordBlock);
+        if(keywords.equals(UI_locale.KEYWORDS_DEFAULT_TEXT)) {
+            keywords = "";
+        }
+        // || keyword.equals(UI_locale.KEYWORDS_DEFAULT_TEXT)
+        if(keywords.length() > length) {
+            keywordsTabObject.showKeywordLengthError();
+        } else {
+            keywordsTabObject.resetKeywordLengthError();
+            PasswordRowBlock passwordBlock = new PasswordRowBlock(gen, scrollableOutputArea);
+            scrollableOutputArea.addComponent(passwordBlock);
+        }
     }
 
     public void handleCheckStrengthButton(String keywords) {
