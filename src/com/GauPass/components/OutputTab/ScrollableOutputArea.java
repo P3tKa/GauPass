@@ -22,7 +22,7 @@ public class ScrollableOutputArea extends JPanel {
     private JScrollBar verticalScrollbar;
     private JLabel messageLabel;
 
-    private final static float MESSAGE_LABEL_SIZE = 18f;
+    private final static float MESSAGE_LABEL_SIZE = 15f;
 
     private final static int SCROLL_INC = 25;
 
@@ -78,7 +78,7 @@ public class ScrollableOutputArea extends JPanel {
             block.resetColoredBlock();
         }
         blockArray.clear();
-        
+
         contentPanel.removeAll();
         revalidate();
         repaint();
