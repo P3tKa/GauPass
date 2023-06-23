@@ -106,6 +106,7 @@ public class MainFrame extends JFrame {
 
     public void handleCheckStrengthButton(String keywords) {
         keywordsTabObject.resetLabels();
+        keywordsTabObject.resetKeywordLengthError();
 
         if (keywords.equals(UI_locale.KEYWORDS_DEFAULT_TEXT) || keywords.equals("")) {
             keywordsTabObject.showLabel(UI_locale.ERROR_EMPTY_FIELD);
