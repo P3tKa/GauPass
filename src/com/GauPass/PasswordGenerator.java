@@ -66,19 +66,19 @@ public String generateWithKeyword() {
         StringBuilder passwordBuilder = new StringBuilder();
         
         if(includeNumber) {
-            int perc = rand.nextInt(41 - 20) + 20; // Get random percent between 20 and 40
+            int perc = rand.nextInt(41 - 30) + 30; // Get random percent between 30 and 40
             String numberString = generateRandomString(NUMBER_CHARS, length * perc / 100);
             passwordBuilder.append(numberString);
         }
 
         if(includeSpecChars) {
-            int perc = rand.nextInt(41 - 20) + 20;
+            int perc = rand.nextInt(41 - 30) + 30;
             String specialCharString = generateRandomString(SPECIAL_CHARS, length * perc / 100);
             passwordBuilder.append(specialCharString);
         }
 
         if(includeCapLetters) {
-            int perc = rand.nextInt(41 - 20) + 20;
+            int perc = rand.nextInt(41 - 30) + 30;
             String capLetterString = generateRandomString(UPPERCASE_CHARS, length * perc / 100);
             passwordBuilder.append(capLetterString);
         }
