@@ -15,8 +15,39 @@ public class ModifyKeyword {
         this.keyword = keyword;
     }
 
-    public String modifyKeyword() {
-        return generate(keyword);
+    public String modifyKeyword(String transformedNewKeyword) {
+        String newKeyword = remake(transformedNewKeyword);
+
+        if (this.keyword.equals(newKeyword)) {
+            return transformedNewKeyword;
+        } else {
+            this.keyword = newKeyword;
+            return generate(this.keyword);
+        }
+    }
+
+     private String remake(String transformedKeyword) {
+        StringBuilder remadeKeyword = new StringBuilder();
+        Map<Character, Character> reversedSymbolMap = createReverseSymbolMap();
+        for (char c : transformedKeyword.toCharArray()) {
+            if (reversedSymbolMap.containsKey(c)) {
+                remadeKeyword.append(reversedSymbolMap.get(c));
+            } else {
+                remadeKeyword.append(c);
+            }
+        }
+        return remadeKeyword.toString();
+    }
+
+    private static Map<Character, Character> createReverseSymbolMap() {
+        Map<Character, List<Character>> symbolMap = createSymbolMap();
+        Map<Character, Character> reverseSymbolMap = new HashMap<>();
+        for (Map.Entry<Character, List<Character>> entry : symbolMap.entrySet()) {
+            for (Character c : entry.getValue()) {
+                reverseSymbolMap.put(c, entry.getKey());
+            }
+        }
+        return reverseSymbolMap;
     }
 
     public String generate(String word) {
@@ -58,7 +89,7 @@ public class ModifyKeyword {
                 k++;
             }
         }
-        return word.length() >= 7 && k >= word.length() / 2 && !word.equals(newPass);
+        return k >= word.length() / 2 && !word.equals(newPass);
     }
 
     private static Map<Character, List<Character>> createSymbolMap() {
