@@ -85,10 +85,11 @@ public class SettingsCheckbox extends BaseInteractivePanel {
     }
 
     protected void loadImages() {
-        defaultImage = new LoadBackgroundImage().loadImage(UNSELECTED_DEFAULT);
-        hoverImage = new LoadBackgroundImage().loadImage(UNSELECTED_HOVER);
-        onClickImage = new LoadBackgroundImage().loadImage(ONCLICK);
-        selectedDefaultImage = new LoadBackgroundImage().loadImage(SELECTED_DEFAULT);
-        selectedHoverImage = new LoadBackgroundImage().loadImage(SELECTED_HOVER);
+        LoadBackgroundImage imageLoader = new LoadBackgroundImage();
+        defaultImage = imageLoader.loadImage(UNSELECTED_DEFAULT);
+        hoverImage = imageLoader.loadImage(UNSELECTED_HOVER);
+        onClickImage = imageLoader.loadImage(ONCLICK);
+        selectedDefaultImage = imageLoader.loadImage(SELECTED_DEFAULT);
+        selectedHoverImage = imageLoader.loadImage(SELECTED_HOVER);
     }
 }

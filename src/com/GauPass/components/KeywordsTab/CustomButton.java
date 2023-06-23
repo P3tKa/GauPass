@@ -54,8 +54,9 @@ public class CustomButton extends BaseInteractivePanel  {
     }
 
     private void loadImages() {
-        defaultImage = new LoadBackgroundImage().loadImage(MAIN_ICON_PATH);
-        hoverImage = new LoadBackgroundImage().loadImage(HOVER_ICON_PATH);
-        onClickImage = new LoadBackgroundImage().loadImage(ON_CLICK_ICON_PATH);
+        LoadBackgroundImage imageLoader = new LoadBackgroundImage();
+        defaultImage = imageLoader.loadImage(MAIN_ICON_PATH);
+        hoverImage = imageLoader.loadImage(HOVER_ICON_PATH);
+        onClickImage = imageLoader.loadImage(ON_CLICK_ICON_PATH);
     }
 }
