@@ -284,9 +284,9 @@ public class KeywordsTab {
                 mainFrame.handleCheckStrengthButton(inputField.getText());
             }
         };
-        CustomButton clearKeywordsButton = new CustomButton(UI_locale.CHECK_PASS_STRENGTH, customEvent);
+        CustomButton checkStrengthButton = new CustomButton(UI_locale.CHECK_PASS_STRENGTH, customEvent);
 
-        return clearKeywordsButton;
+        return checkStrengthButton;
     }
 
     public void showLabel(String labelName) {
