@@ -12,12 +12,8 @@ public class BaseErrorLabel extends JLabel {
         setText(label);
         setOpaque(true);
 
-        // Create a custom dotted border
         Border dottedBorder = new DottedBorder(UI_color.BLACK, 2);
-        // Create an empty border
         Border emptyBorder = BorderFactory.createEmptyBorder(10, 10, 10, 10);
-
-        // Combine the empty border and dotted border
         Border compoundBorder = BorderFactory.createCompoundBorder(dottedBorder, emptyBorder);
 
         setBorder(compoundBorder);

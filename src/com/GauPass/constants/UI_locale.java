@@ -1,6 +1,7 @@
 package com.GauPass.constants;
 
 public class UI_locale {
+    public static final String APP_TITLE = "GauPass - Password Manager";
     public static final String TITLE_BAR_HEADER = "GauPass";
     public static final String SUBMIT_BUTTON_TEXT = "GENERATE";
     public static final String KEYWORDS_DEFAULT_TEXT = "Input keywords to be used,\nleave empty for no keywords\nInput your password to check for its strength";
@@ -16,11 +17,15 @@ public class UI_locale {
     public static final String CHECK_PASS_STRENGTH = "Check Strength";
     public static final String MODIFY_KEYWORD = "Modify Keyword";
 
+    public static final String EMPTY_PASSWORDS_LABEL = "Click GENERATE to create some passwords!";
+
     public static final String ERROR_NO_LETTERS = "No letters!";
     public static final String ERROR_NO_NUMBERS = "No numbers!";
     public static final String ERROR_NO_CHARS = "No special chars!";
     public static final String ERROR_NOT_ENOUGH_LENGTH = "Too small!";
     public static final String ERROR_EMPTY_FIELD = "Input your password!";
+
+    public static final String ERROR_KEYWORDS_LENGTH = "Keywords are longer than selected length!";
 
     public static final String EASTER_EGG_SENTENCE = "unix";
 }

@@ -44,7 +44,7 @@ public class KeywordsTab {
     private JTextArea inputField;
     private JPanel buttonsContainer, labelsContainer;
     private JLabel[] ErrorLabels;
-    private JLabel strengthNumberField;
+    private JLabel strengthNumberField, keywordLengthError;
     private ScrollableOutputArea scrollableOutputArea;
 
     public KeywordsTab(MainFrame mainFrame, ScrollableOutputArea scrollableOutputArea) {
@@ -139,7 +139,6 @@ public class KeywordsTab {
         Border compoundBorder = BorderFactory.createCompoundBorder(lineBoarder, emptyBorder);
         buttonsContainer.setBorder(compoundBorder);
 
-        buttonsContainer.add(createModifyKeywordButton());
         buttonsContainer.add(createGenFiveButton());
         buttonsContainer.add(createClearAllButton());
         buttonsContainer.add(createClearButton());
@@ -149,10 +148,11 @@ public class KeywordsTab {
 
     private CustomButton createModifyKeywordButton() {
         CustomEvent customEvent = () -> {
-            ModifyKeyword modifyKeywordObj = new ModifyKeyword(inputField.getText());
-            inputField.setText(modifyKeywordObj.modifyKeyword());
+            ModifyKeyword modifyKeywordObj = new ModifyKeyword("");
+            inputField.setText(modifyKeywordObj.modifyKeyword(inputField.getText()));
             hidePasswordStrength();
             resetLabels();
+            resetKeywordLengthError();
         };
         CustomButton modifyKeywordButton = new CustomButton(UI_locale.MODIFY_KEYWORD, customEvent);
         return modifyKeywordButton;
@@ -175,17 +175,23 @@ public class KeywordsTab {
             scrollableOutputArea.removeAllComponents();
             hidePasswordStrength();
             resetLabels();
+            resetKeywordLengthError();
         };
         CustomButton clearAllButton = new CustomButton("Clear passwords", customEvent);
         return clearAllButton;
     }
 
     private JPanel createStrengthPanel() {
-        JPanel strengthPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JPanel strengthPanel = new JPanel();
         strengthPanel.setBackground(UI_color.FOG);
 
-        strengthPanel.add(createPasswordStrengthBox());
+        JPanel buttonContainer = new JPanel();
+        buttonContainer.setBackground(UI_color.FOG);
+        buttonContainer.add(createModifyKeywordButton());
+
+        strengthPanel.add(buttonContainer);
         strengthPanel.add(createCheckStrengthButton());
+        strengthPanel.add(createPasswordStrengthBox());
 
         return strengthPanel;
     }
@@ -213,7 +219,15 @@ public class KeywordsTab {
             labelsContainer.add(errorLabel);
         }
 
+        createkeywordLengthError();
+
         return labelsContainer;
+    }
+
+    public void createkeywordLengthError() {
+        keywordLengthError = new BaseErrorLabel(UI_locale.ERROR_KEYWORDS_LENGTH);
+        keywordLengthError.setVisible(false);
+        labelsContainer.add(keywordLengthError);
     }
 
     public void showPasswordStrength(int strength) {
@@ -256,6 +270,7 @@ public class KeywordsTab {
             inputField.setText("");
             hidePasswordStrength();
             resetLabels();
+            resetKeywordLengthError();
         };
         CustomButton clearKeywordsButton = new CustomButton(UI_locale.CLEAR_KEYWORDS, customEvent);
         return clearKeywordsButton;
@@ -283,6 +298,14 @@ public class KeywordsTab {
         for (JLabel errorLabel : ErrorLabels) {
             errorLabel.setVisible(false);
         }
+    }
+
+    public void resetKeywordLengthError() {
+        keywordLengthError.setVisible(false);
+    }
+
+    public void showKeywordLengthError() {
+        keywordLengthError.setVisible(true);
     }
 
     public static JLabel findLabelByText(JLabel[] labels, String searchText) {
