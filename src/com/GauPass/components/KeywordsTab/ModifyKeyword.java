@@ -1,7 +1,5 @@
 package com.GauPass.components.KeywordsTab;
 
-import java.awt.*;
-
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.List;
